@@ -66,8 +66,6 @@ fn main() {
     let hello = &s[0..5];
     let world = &s[6..];
     println!("hello is {}, world is {}", hello, world);
-
-
 }
 
 fn give_ownership() -> String {
