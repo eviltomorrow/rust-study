@@ -90,9 +90,9 @@ fn main() {
      */
 
     let config_max = Some(10);
-    if let Some(max) = config_max{
+    if let Some(max) = config_max {
         println!("the max is {}", max);
-    }else{
+    } else {
         println!("None")
     }
 }
