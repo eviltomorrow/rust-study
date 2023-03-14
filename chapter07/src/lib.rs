@@ -13,7 +13,6 @@ mod tests {
     }
 }
 
-
 /*
 1、模块可以让我们将一个 crate 中的代码进行分组，以提高可读性与重用性。
 2、模块中可以定义子模块，结构体，枚举，常量， 特性或者函数。
@@ -33,7 +32,7 @@ mod tests {
 14、路径拆分为多个文件。参照文件目录结构，和 mod 名称相同。
  */
 
- mod front_of_house {
+mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
     }
@@ -114,18 +113,18 @@ pub fn random_num() {
 
 // }
 
-    /*
-    1、一个包可以包含多个二进制 crate 和一个可选的 crate 库。至少包含一个 crate。
-    2、同一作用域内不能拥有两个相同名称的项。
-    3、模块系统：
-        - 包：Cargo 的一个功能，它允许你构建、测试和分享 crate。
-        - Crates： 一个模块的树形结构，它形成了库或二进制项目。
-        - 模块（modules）和 use：允许你控制作用域和路径的私有性。
-        - 路径（path）：一个命名如结果头、函数或模块等项的方式。
-    4、crate 是 Rust 在编译时最小的代码单位，可以包含模块。形式：二进制项和库。
-    5、creat root 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块。
-    6、包是提供一系列功能的一个或者多个 crate。一个包会包含一个 Cargo.toml 文件。
-    7、cargo 约定：
-        - src/main.rs，就是一个与包同名的二进制 crate 的 crate 根。
-        - src/lib.rs，则是带有与其同名的库 crate 的 crate 根。
-     */
+/*
+1、一个包可以包含多个二进制 crate 和一个可选的 crate 库。至少包含一个 crate。
+2、同一作用域内不能拥有两个相同名称的项。
+3、模块系统：
+    - 包：Cargo 的一个功能，它允许你构建、测试和分享 crate。
+    - Crates： 一个模块的树形结构，它形成了库或二进制项目。
+    - 模块（modules）和 use：允许你控制作用域和路径的私有性。
+    - 路径（path）：一个命名如结果头、函数或模块等项的方式。
+4、crate 是 Rust 在编译时最小的代码单位，可以包含模块。形式：二进制项和库。
+5、creat root 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块。
+6、包是提供一系列功能的一个或者多个 crate。一个包会包含一个 Cargo.toml 文件。
+7、cargo 约定：
+    - src/main.rs，就是一个与包同名的二进制 crate 的 crate 根。
+    - src/lib.rs，则是带有与其同名的库 crate 的 crate 根。
+ */
