@@ -1,3 +1,5 @@
+use std::fmt::format;
+
 fn main() {
     println!("Hello, world!");
     /*
@@ -58,4 +60,13 @@ fn main() {
             Cell::Text(data) => println!("data is {}", data),
         }
     }
+
+    /*
+    1、字符串初始化，String::new(), String::from(""), "".to_string();
+    2、字符串 slice str，常以借用的方式出现。
+     */
+
+    let s1 = "s1".to_string();
+    let s2 = "s2".to_string();
+    let s3 = format!("{}, {}", s1, s2);
 }
