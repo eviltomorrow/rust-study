@@ -1,5 +1,3 @@
-use std::fmt::format;
-
 fn main() {
     println!("Hello, world!");
     /*
@@ -63,10 +61,18 @@ fn main() {
 
     /*
     1、字符串初始化，String::new(), String::from(""), "".to_string();
-    2、字符串 slice str，常以借用的方式出现。
+    2、更新字符串，push('a'), push_str("abc"), add(self, &s), format!("{}{}", s1, s2);
      */
 
-    let s1 = "s1".to_string();
-    let s2 = "s2".to_string();
-    let s3 = format!("{}, {}", s1, s2);
+    let mut s1 = String::from("Hello");
+    let s2 = "shepard".to_string();
+
+    s1.push('h');
+    s1.push_str("Hello");
+    s1.push_str(&s2);
+    println!("s1 is {}, s2 is {}", s1, s2);
+
+    let s3 = "test".to_string();
+    let s3 = &s3[2..];
+    println!("Hello {}", s3);
 }
