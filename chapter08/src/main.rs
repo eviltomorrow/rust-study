@@ -1,4 +1,4 @@
-use std::fmt::format;
+use std::collections::HashMap;
 
 fn main() {
     println!("Hello, world!");
@@ -69,4 +69,35 @@ fn main() {
     let s1 = "s1".to_string();
     let s2 = "s2".to_string();
     let s3 = format!("{}, {}", s1, s2);
+    println!("{}", s3);
+
+    let hello = "Здравствуйте";
+    let answer = &hello[4..];
+    println!("{answer}");
+
+    /*
+    1、HashMap<K, V> 类型储存了一个键类型 K 对应一个值类型 V 的映射。它通过一个 哈希函数（hashing function）来实现映射，决定如何将键和值放入内存中。
+    2、HashMap insert 会导致所有权变更，如果使用引用，要注意引用的有效性。
+    */
+
+    let mut scores = HashMap::new();
+    scores.insert("Shepard", 30);
+    scores.insert("Liarsa", 20);
+    println!("{:#?}", scores);
+
+    let name = "A";
+    let score = scores.get(name).copied().unwrap_or(0);
+    println!("{:#?}", score);
+
+    for (k, v) in scores {
+        println!("{k}, {v}");
+    }
+
+    let text = "hello world wonderful world";
+    let mut map = HashMap::new();
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:#?}", map);
 }
