@@ -63,7 +63,7 @@ fn main() {
 
     /*
     1、字符串初始化，String::new(), String::from(""), "".to_string();
-    2、字符串 slice str，常以借用的方式出现。
+    2、更新字符串，push('a'), push_str("abc"), add(self, &s), format!("{}{}", s1, s2);
      */
 
     let s1 = "s1".to_string();
