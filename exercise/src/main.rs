@@ -40,6 +40,25 @@ fn main() {
 
     let a = [1, 2, 3];
     println!("{:?}", a);
+    println!("{:?}", a);
+
+    for e in a {
+        println!("e is {:?}", e);
+    }
+
+    let mut count = 0;
+    loop {
+        count += 1;
+        if count >= 10 {
+            break;
+        }
+        println!("count-{}", count);
+    }
+
+    while count > 5 {
+        count -= 1;
+        println!("count-{count}");
+    }
 }
 
 const THREE_HOURS_SECONDS: i64 = 32 * 60 * 60;
