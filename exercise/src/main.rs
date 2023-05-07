@@ -158,6 +158,16 @@ fn main() {
 
     let rec = Rectangle::new();
     println!("{:?}", rec);
+
+    let _quit = Message::Quit;
+    let _move = Message::Move { x: 10, y: 20 };
+    let _write = Message::Write(String::from("Hello world"));
+    let _change_color = Message::ChangeColor(10, 10, 10);
+    _move.call();
+
+    if let Message::ChangeColor(x, y, z) = _change_color {
+        println!("{}, {}, {}", x, y, z);
+    }
 }
 
 const THREE_HOURS_SECONDS: i64 = 32 * 60 * 60;
@@ -274,6 +284,23 @@ impl Rectangle {
             name: String::from("长方形"),
             width: 10,
             height: 10,
+        }
+    }
+}
+
+enum Message {
+    Quit,
+    Move { x: u32, y: u32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl Message {
+    fn call(&self) {
+        match self {
+            Message::Move { x, y } => println!("{} {}", x, y),
+            Message::ChangeColor(x, y, z) => println!("{x}, {y}, {z}"),
+            _ => {}
         }
     }
 }
