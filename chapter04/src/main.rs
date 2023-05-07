@@ -1,5 +1,6 @@
 fn main() {
     println!("Hello, world!");
+    println!("Hello");
     /*
     所有权的规则
     1. Rust 中的每一个值都有一个所有者（owner）。
@@ -69,8 +70,7 @@ fn main() {
 }
 
 fn give_ownership() -> String {
-    let s = String::from("yours");
-    s
+    String::from("Hello")
 }
 
 fn claculate_length(s: &String) -> usize {

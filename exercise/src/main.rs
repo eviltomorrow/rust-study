@@ -1,7 +1,7 @@
 fn main() {
     println!("Hello, world!");
     let mut x = 20;
-    x = x + 20;
+    x += 20;
     println!("x is {x}");
 
     say();
@@ -85,7 +85,7 @@ fn main() {
     println!("hello is {hello}");
 
     let mut s = String::from("");
-    s.push_str("a");
+    s.push('a');
     println!("{s}");
 
     let a: [i32; 5] = [1, 2, 3, 4, 5];
@@ -95,7 +95,69 @@ fn main() {
     let a = &mut s;
     change_word(a);
     let b = &s;
-    println!("{}",  b);
+    println!("{}", b);
+
+    let user = User {
+        active: true,
+        username: String::from("shepard"),
+        email: String::from("eviltomorrow@163.com"),
+        sign_in_count: 20,
+    };
+    println!(
+        "{:?}, {}, {}, {}, {}",
+        user, user.active, user.username, user.email, user.sign_in_count
+    );
+
+    let username = String::from("Hello");
+    let user = new_user(username, String::from("eviltomorrow@163.com"));
+    println!(
+        "{:?}, {}, {}, {}, {}",
+        user, user.active, user.username, user.email, user.sign_in_count,
+    );
+
+    let user1 = User {
+        username: String::from("u2"),
+        ..user
+    };
+    println!(
+        "{:?}, {}, {}, {}, {}",
+        user1, user1.active, user1.username, user1.email, user1.sign_in_count,
+    );
+
+    let black = Color(0, 0, 0);
+    let origin = Point(1, 2, 3);
+    println!("{:?}, {:?}", black, origin);
+
+    let ae = AlwaysEqual;
+    println!("{:?}", ae);
+
+    let rec = Rectangle {
+        name: String::from("长方形"),
+        width: 10,
+        height: 20,
+    };
+
+    let sum_area = area(&rec);
+    println!("name {}'s sum_area is {}", rec.name, sum_area);
+
+    println!("name {}'s area {}", rec.name, rec.area());
+
+    let rec1 = Rectangle {
+        name: String::from("rec1"),
+        width: 10,
+        height: 20,
+    };
+
+    let rec2 = Rectangle {
+        name: String::from("rec2"),
+        width: 5,
+        height: 10,
+    };
+    let flag = rec1.can_hold(&rec2);
+    println!("flag is {}", flag);
+
+    let rec = Rectangle::new();
+    println!("{:?}", rec);
 }
 
 const THREE_HOURS_SECONDS: i64 = 32 * 60 * 60;
@@ -121,8 +183,7 @@ fn make_copy(x: i32) {
 }
 
 fn gives_ownership() -> String {
-    let s = String::from("Hello world");
-    s
+    String::from("Hello world")
 }
 
 fn takes_and_give_back(s: String) -> String {
@@ -135,8 +196,7 @@ fn calculate_length(s: String) -> (String, usize) {
 }
 
 fn calculate_length2(s: &String) -> usize {
-    let l = s.len();
-    l
+    s.len()
 }
 
 fn first_word(s: &String) -> usize {
@@ -161,4 +221,59 @@ fn first_word2(s: &String) -> &str {
 
 fn change_word(s: &mut String) {
     s.push_str("Hello");
+}
+
+#[derive(Debug)]
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn new_user(username: String, email: String) -> User {
+    User {
+        active: false,
+        username,
+        email,
+        sign_in_count: 20,
+    }
+}
+
+#[derive(Debug)]
+struct Color(i32, i32, i32);
+
+#[derive(Debug)]
+struct Point(i32, i32, i32);
+
+#[derive(Debug)]
+struct AlwaysEqual;
+
+#[derive(Debug)]
+struct Rectangle {
+    name: String,
+    width: u32,
+    height: u32,
+}
+
+fn area(rectangle: &Rectangle) -> u32 {
+    let _name = &rectangle.name;
+    println!("name is {}", rectangle.name);
+    rectangle.width * rectangle.height
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+    fn can_hold(&self, rectangle: &Rectangle) -> bool {
+        self.width > rectangle.width && self.height > rectangle.height
+    }
+    fn new() -> Rectangle {
+        Rectangle {
+            name: String::from("长方形"),
+            width: 10,
+            height: 10,
+        }
+    }
 }
