@@ -230,8 +230,8 @@ fn calculate_length2(s: &String) -> usize {
 
 fn first_word(s: &String) -> usize {
     let bytes = s.as_bytes();
-    for (i, &e) in bytes.iter().enumerate() {
-        if e == b' ' {
+    for (i, e) in bytes.iter().enumerate() {
+        if *e == b' ' {
             return i;
         }
     }
