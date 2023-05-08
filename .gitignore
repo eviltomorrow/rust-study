@@ -10,4 +10,4 @@ Cargo.lock
 **/*.rs.bk
 
 chapter*/target
-exercise/target
+exercise*/target
