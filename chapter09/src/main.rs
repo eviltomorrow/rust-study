@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{self, File};
 
 fn main() {
     /*
@@ -19,4 +19,7 @@ fn main() {
         Ok(_) => println!("ok"),
         Err(err) => println!("{:#?}", err),
     }
+
+    let read_text = fs::read_to_string("hello.txt").unwrap();
+    println!("{}", read_text);
 }
