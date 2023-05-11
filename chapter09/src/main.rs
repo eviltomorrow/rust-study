@@ -1,6 +1,6 @@
+use std::fs;
 use std::io::{self, Read};
 use std::{fs::File, io::ErrorKind};
-use std::fs;
 
 fn main() {
     /*
@@ -41,8 +41,7 @@ fn main() {
     };
     _ = greeting_file;
 
-    let greeting_file =
-        File::open("hello.txt").expect(format!("Open file {} failure", "hello.txt").as_str());
+    let greeting_file = File::open("hello.txt").expect("Open file failure");
     _ = greeting_file;
 
     let username_result = read_username_from_file();
