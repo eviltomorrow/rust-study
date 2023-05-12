@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 fn main() {
     println!("Hello, world!");
 
@@ -12,30 +14,49 @@ fn main() {
     let v2 = vec!['c', 'b', 'a', 'e', 'f'];
     println!("{}", large_char(&v2));
 
-    let v3 = vec![1, 2, 3, 4, 5, 6];
-    println!("{}", largest(&v3));
+    largest(&v1);
 
-    use aggregator::Tweet;
-    let tweet = Tweet {
-        username: String::from("hello world"),
-        conent: String::from("this is shepard"),
+    let p = Point { x: 10, y: 20 };
+    println!("x is {}, y is {}", p.x(), p.y);
+
+    let p = Point {
+        x: 10.0_f32,
+        y: 10.0_f32,
     };
-    let data = tweet.summarize();
-    println!("data is {}", data);
-    let data = tweet.summarize_default();
-    println!("data is {}", data);
+    println!("distance: {}", p.distance_from_origin());
 
-    notify(&tweet);
-    notify3(&tweet);
-    notify4(&tweet);
-    notify2(tweet);
+    let p2 = Point2 { x: 10, y: 20.0 };
+    p2.mixup(Point2 { x: 10, y: 10.0 });
 
-    let s = returns_summarizable();
+    let p3 = Point2 { x: 10, y: 20 };
+    let b = "10";
+    let p4 = p3.mixup2(Point2 {
+        x: String::from("a"),
+        y: b,
+    });
+    println!("{}", p4.y);
+
+    let s = Tweet {
+        username: String::from("shepard"),
+        content: String::from("hello world"),
+    };
+    println!("summarize is {}", s.summarize());
+
+    let s = String::from("Shepard");
     println!("{}", s.summarize());
 
-    let s1 = String::from("hello");
-    let s2 = "hello world";
-    let s3 = longest(&s1, &s2);
+    notify(&s);
+    notify2(&s);
+    notify3(&s, &s);
+    notify4(&s);
+    notify5(&s);
+    some_function(&s, &s);
+    some_function2(&s, &s);
+
+    let s1 = String::from("Hello world");
+    let s2 = "shepard";
+
+    let s3 = longest(&s1, s2);
     println!("{}", s3);
 }
 
@@ -70,95 +91,148 @@ fn large_char(list: &[char]) -> &char {
 }
 
 fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
-    let mut largest_value = &list[0];
-    for value in list {
-        if largest_value < value {
-            largest_value = value
+    let mut largest = &list[0];
+    for e in list {
+        if largest < e {
+            largest = e;
         }
     }
-    largest_value
+    largest
 }
 
-pub fn notify(item: &impl Summary) {
-    println!("{}", item.summarize());
+struct Point<T> {
+    x: T,
+    y: T,
 }
 
-pub fn notify2(item: impl Summary) {
-    println!("{}", item.summarize());
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
 }
 
-pub fn notify3<T: Summary>(item: &T) {
-    println!("{}", item.summarize());
+impl Point<f32> {
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
 }
 
-pub fn notify4<T>(item: &T)
-where
-    T: Summary,
-{
-    println!("{}", item.summarize());
+struct Point2<X1, Y1> {
+    x: X1,
+    y: Y1,
 }
 
-pub trait Summary {
+impl<X1, Y1> Point2<X1, Y1> {
+    fn mixup<X2, Y2>(self, other: Point2<X2, Y2>) -> Point2<X1, Y2> {
+        Point2 {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
+impl<X2, Y2> Point2<X2, Y2> {
+    fn mixup2<X1, Y1>(self, other: Point2<X1, Y1>) -> Point2<X1, Y2> {
+        Point2 {
+            x: other.x,
+            y: self.y,
+        }
+    }
+}
+
+trait Summary {
     fn summarize(&self) -> String;
-    fn summarize_default(&self) -> String {
-        String::from("Read more...")
+}
+
+struct NewsArticle {
+    location: String,
+    content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, {}", self.location, self.content)
     }
 }
 
-mod aggregator {
-    use crate::Summary;
+struct Tweet {
+    username: String,
+    content: String,
+}
 
-    pub struct NewsArticle {
-        pub headline: String,
-        pub location: String,
-        pub content: String,
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{}, {}", self.username, self.content)
     }
+}
 
-    impl Summary for NewsArticle {
-        fn summarize(&self) -> String {
-            format!("{}, {}, {}", self.headline, self.location, self.content)
+impl Summary for String {
+    fn summarize(&self) -> String {
+        format!("I am {}", self)
+    }
+}
+
+fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+
+fn notify2<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize())
+}
+
+fn notify3<T: Summary>(item1: &T, item2: &T) {
+    println!("Union news! {}, {}", item1.summarize(), item2.summarize());
+}
+
+fn notify4(item: &(impl Summary + Display)) {
+    println!("Breaking new {}", item.summarize());
+}
+
+fn notify5<T: Summary + Display>(item: &T) {
+    println!("Breaking new {}", item.summarize());
+}
+
+fn some_function<T: Display + Clone, U: Clone + Summary>(t: &T, u: &U) -> i32 {
+    _ = t;
+    _ = u;
+    0
+}
+
+fn some_function2<T, U>(t: &T, u: &U) -> i32
+where
+    T: Clone,
+    U: Summary,
+{
+    _ = t;
+    _ = u;
+    0
+}
+
+pub struct Pair<T> {
+    pub x: T,
+    pub y: T,
+}
+
+impl<T> Pair<T> {
+    pub fn new(x: T, y: T) -> Self {
+        Pair { x: x, y: y }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    pub fn cmp_display(&self) {
+        if self.x > self.y {
+            println!("The larget member is x = {}", self.x);
+        } else {
+            println!("The larget member is y = {}", self.y);
         }
     }
-
-    pub struct Tweet {
-        pub username: String,
-        pub conent: String,
-    }
-    impl Summary for Tweet {
-        fn summarize(&self) -> String {
-            format!("{}, {}", self.username, self.conent)
-        }
-    }
 }
 
-fn returns_summarizable() -> impl Summary {
-    use aggregator::Tweet;
-    Tweet {
-        username: "shepard".to_string(),
-        conent: String::from("Hello world"),
-    }
-}
-
-// fn returns_summarizable2(flag: bool) -> impl Summary{
-//     use aggregator::{NewsArticle, Tweet};
-//     if flag {
-//         NewsArticle{
-//             headline: String::from("h"),
-//             location: String::from("b"),
-//             content: String::from("c"),
-//         }
-//     }else{
-//         Tweet{
-//             username: String::from("a"),
-//             conent: String::from("b"),
-//         }
-//     }
-// }
-
-fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str {
-    if str1.len() > str2.len() {
-        str1
+fn longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
+    if s1.len() > s2.len() {
+        s1
     } else {
-        str2
+        s2
     }
 }
