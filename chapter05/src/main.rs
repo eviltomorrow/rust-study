@@ -1,3 +1,5 @@
+use std::println;
+
 fn main() {
     println!("Hello, world!");
     /*
@@ -22,6 +24,12 @@ fn main() {
         user1.active, user1.username, user1.email, user1.sign_in_count
     );
 
+    let u3 = build_user(
+        String::from("shepard"),
+        String::from("eviltomorrow@163.com"),
+    );
+    println!("{:#?}", u3);
+
     let mut user2 = User {
         username: String::from("captain"),
         ..user1
@@ -33,6 +41,9 @@ fn main() {
 
     let black = Color(0, 0, 0);
     println!("black is {:#?}", black);
+    println!("color.0 is {}", black.0);
+    let (x, y, z) = black;
+    println!("x, y, z is {}, {}, {}", x, y, z);
 
     /*
     1、println! 宏能处理很多类型，这些基本常用的类型，默认都实现了 Display。
@@ -100,6 +111,15 @@ struct User {
     username: String,
     email: String,
     sign_in_count: u64,
+}
+
+fn build_user(username: String, email: String) -> User {
+    User {
+        active: true,
+        username,
+        email,
+        sign_in_count: 0,
+    }
 }
 
 #[derive(Debug)]
