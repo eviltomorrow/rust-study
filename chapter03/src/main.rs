@@ -18,6 +18,7 @@ fn main() {
         1、常量值总是不可变，使用 const 关键字声明，并且必须注明值的类型。
         2、常量可以在任何作用域中声明，包括全局作用域。
         3、常量的命名在单词之间用全大写加下划线。
+        4、常量只能被设置为常量表达式，而不是任何其他只能运行时计算出的值。
      */
     const LOCAL_THREE_HOURS_IN_SECONDS: u32 = 3 * 60 * 60;
     println!("LOCAL CONST is {LOCAL_THREE_HOURS_IN_SECONDS}");
@@ -45,11 +46,21 @@ fn main() {
     //---------------------------------------------------------
     /*
     知识点：
+        每一个值都属于某一个数据类型。
         1、数据类型分为两种，标量和复合。每一个值都有一种数据类型，再有多种数据类型可能时，必须明确指定。
+           let guess: u32 = guess.trim().parse().expect("Failed to parse guess, Not a number");
         标量：
-            代表有整型，浮点型，布尔型和字符型。
+            代表一个单独的值。有整型，浮点型，布尔型和字符型。
+            a、整型: i(u)8、i(u)16、i(u)32、i(u)64、i(u)128、i(u)size。
+                     可以使用 _ 进行分割，以便读数。
+                     0x, 0o, 0b, b'a', 100。
+                     默认类型是 i32, i(u)size 主要作为集合的索引。
+            b、浮点型： f32、f64，有符号，性能速度几乎一样。
+            c、布尔型： bool。
+            d、字符型： char。char 类型的大小是四个字节。
         复合：
             代表有元组、数组。
+            a、不带任何值的元组有个特殊的名称，叫做单元（unit）元组。写作（）。表示空值或空的返回类型。
      */
 
     let tup = (10, "Hello", true);
@@ -63,10 +74,19 @@ fn main() {
     let array: [f32; 5] = [1.0, 2.0, 3.0, 4.0, 5.0];
     println!("array is {:?}", array);
 
+    let array: [String; 2] = [String::new(), String::from("hello")];
+    println!("array is {:?}", array);
+
+    let array = [5; 3];
+    println!("array is {:?}", array);
+    println!("array is {}, {}", array[0], array[array.len() - 1]);
+
+    let i: usize = 2;
+    println!("array is {:?}", array[i]);
     //---------------------------------------------------------
     /*
     知识点：
-        1、函数和变量名使用 snake case 规范风格。
+        1、函数和变量名使用 snake case 规范风格，小写 + 下划线。
         2、每个参数必须声明参数的类型。
         3、函数体由一系列的语句和一个可选的结尾表达式构成。
         4、Rust 是一门基于表达式的语言。
@@ -88,12 +108,15 @@ fn main() {
     let x = five();
     println!("x is {x}");
 
+    let x = println!("{}", 10);
+    println!("{:#?}", x);
     //---------------------------------------------------------
     /*
     知识点：
         1、if 表达式中的值必须时 bool 值。
         2、因为 if 是一个表达式，我们可以在 let 语句的右侧使用它，返回值都必须时相同类型。
         3、循环分为 loop、while、for 三种
+        4、循环的标签需要带 '。
 
      */
 
@@ -150,7 +173,6 @@ fn main() {
         println!("{number}!");
         number -= 1;
     }
-    println!("EOF");
 
     let a = [1, 2, 3, 4, 5];
     for e in a {

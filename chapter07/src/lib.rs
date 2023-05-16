@@ -51,8 +51,7 @@ mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
 
-        #[warn(dead_code)]
-        seasonal_fruit: String,
+        pub seasonal_fruit: String,
     }
 
     impl Breakfast {

@@ -11,3 +11,4 @@ Cargo.lock
 
 chapter*/target
 exercise*/target
+projects/guessing_game/target
