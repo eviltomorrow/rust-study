@@ -58,6 +58,23 @@ fn main() {
 
     let s3 = longest(&s1, s2);
     println!("{}", s3);
+
+    let s4 = longest2(&s1, &s2);
+    println!("{}", s4);
+
+    let s5 = longest3(&s1, &s2);
+    println!("{}", s5);
+
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split(".").next().expect("Not found a '.'");
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+    println!("Important excerpt: {:#?}, part: {}", i, i.part);
+    println!("The part is {}", i.announce_and_return_part("h"));
+
+    let s6 = longest4(&s1, &s2, "a");
+    println!("{}", s6);
 }
 
 fn large(list: &[i32]) -> &i32 {
@@ -234,5 +251,40 @@ fn longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
         s1
     } else {
         s2
+    }
+}
+
+fn longest2<'a>(s1: &'a str, _s2: &str) -> &'a str {
+    s1
+}
+
+fn longest3(s1: &str, s2: &str) -> String {
+    if s1.len() > s2.len() {
+        String::from(s1)
+    } else {
+        String::from(s2)
+    }
+}
+
+fn longest4<'a, T>(s1: &'a str, s2: &'a str, announcement: T) -> &'a str
+where
+    T: std::fmt::Display,
+{
+    println!("announcement: {}", announcement);
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
+
+#[derive(Debug)]
+struct ImportantExcerpt<'a> {
+    part: &'a str,
+}
+
+impl<'a> ImportantExcerpt<'a> {
+    fn announce_and_return_part(&self, _announcement: &str) -> &str {
+        self.part
     }
 }
