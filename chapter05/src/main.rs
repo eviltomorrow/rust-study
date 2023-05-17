@@ -10,6 +10,7 @@ fn main() {
     5、使用结构体更新语法，可以只更新变化的字段，其他的字段服用外来变量，但要注意所有权和末尾没有 , 的写法。
     6、元组结构体有着结构体名称提供的含义，但没有具体的字段名，只有字段的类型。元组名称不同，即使组成相同，也不相等。
     7、没有任何字段的类单元结构体，通常用来实现 trait 行为。
+    8、所有权问题：结构体拥有它所有的数据，只要结构体是有效的其数据也是有效的，如果要储存其他对象的数据引用，需要加上生命周期。
      */
 
     let user1 = User {
@@ -42,12 +43,13 @@ fn main() {
     let black = Color(0, 0, 0);
     println!("black is {:#?}", black);
     println!("color.0 is {}", black.0);
-    let (x, y, z) = black;
-    println!("x, y, z is {}, {}, {}", x, y, z);
 
+    let _subject = AlwaysEqual;
     /*
     1、println! 宏能处理很多类型，这些基本常用的类型，默认都实现了 Display。
-    2. dbg! 接收引用返回表达式的所有权。
+    2、dbg! 接收引用返回表达式的所有权。
+    3、访问结构体的引用的字段不会移动字段的所有权。
+    4、:? 指示符使用 Debug 的输出格式。
      */
 
     let scale = 2;
@@ -62,12 +64,14 @@ fn main() {
 
     /*
     1、方法总是被定义在结构体的上下文中，并且他们的第一个参数总是 self，代表调用该方法的结构体实例。
-    2、&self 实际上是 self: &self 的缩写。
-    3、在 impl 中定义的函数被称作关联函数。
+    2、&self 实际上是 self: &self 的缩写，Self 类型是 impl 块的类型的别名。
+    3、在 impl 中定义的函数被称作关联函数，通常被用作返回一个结构体新实例的构造函数。
     4、每个方法都允许有多个 impl 块，但是每个方法有其自己的 impl 块。
+    5、使用方法代替函数，主要好处在于组织形式。
+    6、自动引用和解引用：自动为 object 添加 &、&mut 或 * 以便使 object 与方法签名匹配。
      */
 
-    let rect1 = Rectangle {
+    let rect1: Rectangle = Rectangle {
         width: 20,
         height: 10,
     };
@@ -124,3 +128,5 @@ fn build_user(username: String, email: String) -> User {
 
 #[derive(Debug)]
 struct Color(i32, i32, i32);
+
+struct AlwaysEqual;
