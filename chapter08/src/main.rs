@@ -12,10 +12,10 @@ fn main() {
     7、vector 默认存储的元素类型必须都相同，但是可以结合 enum 来实现不同类型的元素组合。
      */
 
-    let mut v = Vec::new();
-    v.push(5);
-    v.push(6);
-    println!("v is {:#?}", v);
+    // let mut v = Vec::new();
+    // v.push(5);
+    // v.push(6);
+    // println!("v is {:#?}", v);
 
     let v = vec![10, 20, 30, 40, 50];
     for (i, d) in v.iter().enumerate() {

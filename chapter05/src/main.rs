@@ -42,8 +42,8 @@ fn main() {
     let black = Color(0, 0, 0);
     println!("black is {:#?}", black);
     println!("color.0 is {}", black.0);
-    let (x, y, z) = black;
-    println!("x, y, z is {}, {}, {}", x, y, z);
+    // let (x, y, z) = black;
+    // println!("x, y, z is {}, {}, {}", x, y, z);
 
     /*
     1、println! 宏能处理很多类型，这些基本常用的类型，默认都实现了 Display。
