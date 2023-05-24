@@ -64,6 +64,7 @@ fn main() {
     /*
     1、字符串初始化，String::new(), String::from(""), "".to_string();
     2、更新字符串，push('a'), push_str("abc"), add(self, &s), format!("{}{}", s1, s2);
+    3、字符串禁止被索引，字符串 slice 可以引用，但要注意边界。
      */
 
     let s1 = "s1".to_string();
@@ -74,6 +75,15 @@ fn main() {
     let hello = "Здравствуйте";
     let answer = &hello[4..];
     println!("{answer}");
+
+    let s1 = String::from("Hello");
+    let s2 = String::from(" world");
+    let s3 = s1 + &s2;
+    /*
+    1、+ 只能是 String + &str
+    2、&String -> &str Deref 强制类型转换
+     */
+    println!("{}", s3);
 
     /*
     1、HashMap<K, V> 类型储存了一个键类型 K 对应一个值类型 V 的映射。它通过一个 哈希函数（hashing function）来实现映射，决定如何将键和值放入内存中。
