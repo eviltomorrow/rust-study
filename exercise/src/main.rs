@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     println!("Hello, world!");
     let mut x = 20;
@@ -187,6 +189,34 @@ fn main() {
     let b = 20;
     let sum = a + b;
     println!("{sum}",);
+
+    let mut map = HashMap::new();
+    map.insert("Hello", 20);
+    map.insert("world", 30);
+    println!("map: {:#?}", map);
+
+    let score = map.get("Hello").copied().unwrap_or(0);
+    println!("{score}");
+
+    for (k, v) in &map {
+        println!("{}: {}", k, v);
+    }
+    println!("{:#?}", map);
+
+    let v1 = vec![1, 2, 3, 4];
+    let v2 = vec![5, 6, 7, 8];
+
+    let mut cache = HashMap::new();
+    cache.insert("v1", v1);
+    cache.insert("v2", v2);
+    for (k, v) in &cache {
+        for (i, n) in v.iter().enumerate() {
+            println!("{}, {}, {}, {}", k, i, n, "OK");
+        }
+        for n in v {
+            println!("{}", n);
+        }
+    }
 }
 
 const THREE_HOURS_SECONDS: i64 = 32 * 60 * 60;
