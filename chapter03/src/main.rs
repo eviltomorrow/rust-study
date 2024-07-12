@@ -149,6 +149,10 @@ fn main() {
     for e in a {
         println!("{}", e);
     }
+
+    for number in (1..4).rev() {
+        println!("number is {}", number);
+    }
 }
 
 fn another_function() {
