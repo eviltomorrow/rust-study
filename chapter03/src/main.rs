@@ -64,5 +64,109 @@ fn main() {
     let tup: (i32, f64, i8) = (500, 6.4, 1);
     let (x, y, z) = tup;
     println!("{x}, {y}, {z}");
-    println!("{0}, {1}", tup.0, tup.1);
+    println!("{}, {}", tup.0, tup.1);
+
+    let a5 = [1, 2, 3, 4, 5];
+    _ = a5;
+    let b5: [i32; 5] = [1, 2, 3, 4, 5];
+    _ = b5;
+    let c5 = [3; 5];
+    _ = c5;
+    println!("{},{},{},{},{}", c5[0], c5[1], c5[2], c5[3], c5[4]);
+
+    another_function();
+    another_function_1(10);
+    print_labeled_measurement(10, 'c');
+
+    let y = {
+        let x = 1;
+        x + 2
+    };
+    println!("{y}");
+
+    println!("{}", five());
+
+    let t = ();
+    _ = t;
+
+    plus_one(10);
+
+    let x = 5;
+    if x < 10 {
+        println!("x < 10");
+    } else {
+        println!("x >= 10");
+    }
+
+    let x = 10;
+    if x == 3 {
+        println!("x == 3");
+    } else if x == 4 {
+        println!("x == 4");
+    } else {
+        println!("unknown!");
+    }
+
+    let condition = true;
+    let number = if condition { 10 } else { 20 };
+    println!("{}", number);
+
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter > 10 {
+            break counter * 2;
+        }
+    };
+    println!("{result}");
+
+    let mut counter = 0;
+    'counting_up: loop {
+        println!("count: {}", counter);
+        let mut remaining = 10;
+        loop {
+            println!("remaining = {}", remaining);
+            if remaining == 9 {
+                break;
+            }
+            if counter == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+        counter += 1;
+    }
+    println!("End count = {}", counter);
+
+    let mut counter = 3;
+    while counter != 0 {
+        println!("{counter}");
+        counter -= 1;
+    }
+    println!("over");
+
+    let a = [10, 20, 30, 40, 50];
+    for e in a {
+        println!("{}", e);
+    }
+}
+
+fn another_function() {
+    println!("Another function.");
+}
+
+fn another_function_1(x: i32) {
+    println!("Another function 1: {x}");
+}
+
+fn print_labeled_measurement(value: i32, unit_label: char) {
+    println!("The measurement is: {}, {}", value, unit_label);
+}
+
+fn five() -> i32 {
+    5
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1
 }
