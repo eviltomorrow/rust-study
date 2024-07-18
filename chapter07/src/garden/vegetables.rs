@@ -1,2 +1,4 @@
 #[derive(Debug)]
-pub struct Asparagus {}
+pub struct Asparagus {
+    pub name: String,
+}
