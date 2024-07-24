@@ -29,6 +29,14 @@ fn main() {
     }
     println!("The value is: {x}");
 
+    let mut x = 20;
+    {
+        x = x * 2;
+        let x = 10;
+        println!("The value is: {}", x);
+    }
+    println!("The value is: {}", x);
+
     let spaces = "      ";
     let spaces = spaces.len();
     println!("The lenght of spaces is: {spaces}");
