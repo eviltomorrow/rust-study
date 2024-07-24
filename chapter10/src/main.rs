@@ -77,7 +77,7 @@ fn longest2<'a, 'b>(str1: &'a str, str2: &'b str) -> &'a str {
     if str1.len() > str2.len() {
         str1
     } else {
-        str2
+        ""
     }
 }
 

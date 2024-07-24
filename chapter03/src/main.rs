@@ -13,6 +13,13 @@ fn main() {
     const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
     println!("THREE_HOURS_IN_SECONDS: {THREE_HOURS_IN_SECONDS}");
 
+    let r;
+    {
+        const CONST_VALUE: u32 = 30;
+        r = CONST_VALUE;
+    }
+    println!("{}", r);
+
     let x = 20;
     println!("The vlaue is: {x}");
     let x = x + 1;
