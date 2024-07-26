@@ -47,7 +47,8 @@ fn main() {
 
     let a: u32 = 100_00;
     let b: i32 = -100_00_0;
-    println!("The value of a, b is {a}, {b}");
+    let c = 10_000_u32;
+    println!("The value of a, b is {a}, {b}, {}", c);
 
     let a1: u32 = 98_222;
     let b1: u32 = 0xff;
@@ -59,7 +60,8 @@ fn main() {
 
     let a2: f32 = 2.0;
     let b2: f64 = 4.0;
-    println!("{a2}, {b2}");
+    let c2 = 4.0; //f64
+    println!("{a2}, {b2}, {}", c2);
 
     let sum = 5 + 10;
     let difference = 95.5 - 4.3;
@@ -73,13 +75,18 @@ fn main() {
     println!("{a3}");
 
     let a4: char = 'c';
-    let b4 = 'd';
+    let b4 = 'd'; //four byte
     println!("{a4}, {b4}");
 
     let tup: (i32, f64, i8) = (500, 6.4, 1);
     let (x, y, z) = tup;
     println!("{x}, {y}, {z}");
     println!("{}, {}", tup.0, tup.1);
+    // 不带任何值的元组有个特殊的名称，叫做 单元（unit） 元组。这种值以及对应的类型都写作 ()，表示空值或空的返回类型。如果表达式不返回任何其他值，则会隐式返回单元值
+
+    let tup: (i32, String) = (10, String::from("Hello"));
+    let (x, y) = tup; //move
+    println!("{}, {}", x, y);
 
     let a5 = [1, 2, 3, 4, 5];
     _ = a5;
@@ -87,8 +94,19 @@ fn main() {
     _ = b5;
     let c5 = [3; 5];
     _ = c5;
+    let d5: [i32; 5] = [1, 2, 3, 4, 5];
+    _ = d5;
+    let e5: [i32; 2];
+    e5 = [1, 2];
+    _ = e5;
+    let f5: [String; 2];
+    f5 = [String::from("a"), String::from("b")];
+    let g5 = e5;
+    _ = g5;
+    println!("{f5:?}");
     println!("{},{},{},{},{}", c5[0], c5[1], c5[2], c5[3], c5[4]);
 
+    // 3.3
     another_function();
     another_function_1(10);
     print_labeled_measurement(10, 'c');
@@ -165,7 +183,7 @@ fn main() {
         println!("{}", e);
     }
 
-    for number in (1..4).rev() {
+    for number in (1..=4).rev() {
         println!("number is {}", number);
     }
 }
