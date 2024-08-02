@@ -37,6 +37,15 @@ fn main() {
         }
     }
 
+    let write = Message::Write(String::from("Hello world"));
+    write.call();
+
+    let data = come_back(true, "Hello world");
+    match data {
+        Some(s) => println!("{}", s),
+        None => println!("no"),
+    }
+
     let coin1 = Coin::Penny;
     let c = value_in_cent(coin1);
     println!("{}", c);
@@ -46,10 +55,13 @@ fn main() {
     let none = plus_one(None);
     println!("{:?}, {:#?}", six, none);
 
+    try_to_dice_roll(10);
+
     let config_max = Some(3u8);
     if let Some(max) = config_max {
         println!("The maximum is configured to be {max}");
     }
+
     let coin2 = Coin::Quarter(UsState::Alabama);
 
     let mut count = 0;
@@ -133,5 +145,41 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
         None => None,
         Some(i) => Some(i + 1),
+    }
+}
+
+#[derive(Debug)]
+pub enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl Message {
+    fn call(&self) {
+        match &self {
+            Self::Quit => println!("quite"),
+            Self::Move { x, y } => println!("move {}, {}", x, y),
+            Self::Write(text) => println!("write {}", text),
+            Self::ChangeColor(_, _, _) => println!("change color"),
+        }
+    }
+}
+
+fn come_back(ok: bool, s: &str) -> Option<String> {
+    let s = String::from(s);
+    if ok {
+        Some(s)
+    } else {
+        None
+    }
+}
+
+fn try_to_dice_roll(dice_roll: i32) {
+    match dice_roll {
+        3 => println!("add"),
+        8 => println!("sub"),
+        _ => (),
     }
 }

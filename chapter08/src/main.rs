@@ -21,6 +21,9 @@ fn main() {
     v.push(9);
     println!("{:?}", &v);
 
+    let ptr = &v;
+    print_type_of(ptr);
+
     let third = v[3];
     println!("{:?}, {}", v, third);
 
@@ -31,17 +34,22 @@ fn main() {
     }
     println!("{:?}", v);
     let v1 = v;
-    println!("{:?}", v1);
+    println!("{:?}", v1,);
 
     let mut v = Vec::new();
     v.push(String::from("one"));
     v.push(String::from("two"));
     v.push(String::from("three"));
-    let two = &mut v[1];
-    // println!("{:?},", v);
+
+    let two = &v[1];
     println!("{}", two);
+
+    let third = &v[1];
+    println!("{}", third);
     // println!("{:?},", v);
     // *two = String::from("");
+    //
+
     for item in &v {
         println!("{}", item);
     }
