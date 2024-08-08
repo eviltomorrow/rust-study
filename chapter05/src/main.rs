@@ -43,7 +43,7 @@ fn main() {
     println!("{}, {}, {}", black.0, black.1, black.2);
     println!("{}, {}, {}", x, y, z);
 
-    let sub = AlwaysEqual;
+    let _sub = AlwaysEqual;
 
     let width1 = 30;
     let height1 = 50;
