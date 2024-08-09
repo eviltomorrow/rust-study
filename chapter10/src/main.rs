@@ -3,6 +3,15 @@ use std::fmt::{Debug, Display};
 fn main() {
     println!("Hello, world!");
 
+    let number_list = vec![34, 50, 25, 100, 65];
+    let mut largest = &number_list[0];
+    for number in &number_list {
+        if largest < number {
+            largest = number;
+        }
+    }
+    println!("The largest is {:?}", largest);
+
     let number_list = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
     let largest = largest_i32(&number_list);
     println!("{}", largest);
