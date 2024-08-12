@@ -23,7 +23,7 @@ pub fn greeting(name: &str) -> String {
 }
 
 pub struct Guess {
-    value: i32,
+    _value: i32,
 }
 
 impl Guess {
@@ -32,7 +32,7 @@ impl Guess {
             panic!("Guess value must be 1 and 100, go {}", value);
         }
 
-        Guess { value }
+        Guess { _value: value }
     }
 }
 
