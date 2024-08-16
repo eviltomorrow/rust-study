@@ -60,41 +60,66 @@ fn main() {
     let r: i32 = 0;
     println!("{}", r);
 
-    let string1 = String::from("abcd");
-    let string2 = "xyz";
-
-    let result = longest(string1.as_str(), string2);
-    println!("The longest string is {}", result);
-
-    let string1 = String::from("abcd");
+    let r1 = String::from("A");
+    let result;
     {
-        let string2 = "xyz";
-        let result = longest(&string1, &string2);
-        println!("The longest string is {}", result);
+        let r2 = String::from("AB");
+        result = longest(&r1, &r2);
+        println!("{}", result);
+    }
+    // println!("{}", result);
+
+    let r1 = String::from("A");
+    {
+        let result;
+        let r2 = String::from("AB");
+        result = longest(&r1, &r2);
+        println!("{}", result);
     }
 
-    let string1 = String::from("abcd");
-    let result: &str;
+    let r1 = String::from("A");
+    let result;
     {
-        let string3 = String::from("xyz000");
-        result = longest2(&string1, &string3);
+        let r2 = String::from("AB");
+        result = longest2(&r2, &r1);
+        println!("{}", result);
     }
-    println!("The longest string is {}", result,);
+
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split(".").next().unwrap();
+    let i = ImportantExcerpt {
+        name: "",
+        part: first_sentence,
+    };
+    println!("{:?}, {}, {}", i, i.name, i.part);
+
+    let result;
+    {
+        let r2 = String::from("AB");
+        result = longest3(&r2);
+        println!("{}", result);
+    }
 }
 
-fn longest2<'a, 'b>(str1: &'a str, str2: &'b str) -> &'a str {
-    if str1.len() > str2.len() {
-        str1
-    } else {
-        ""
-    }
+#[derive(Debug)]
+struct ImportantExcerpt<'a, T> {
+    name: T,
+    part: &'a str,
 }
 
-fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str {
-    if str1.len() > str2.len() {
-        str1
+fn longest3(x: &str) -> &str {
+    x
+}
+
+fn longest2<'a>(x: &'a str, _y: &str) -> &'a str {
+    x
+}
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
     } else {
-        str2
+        y
     }
 }
 
