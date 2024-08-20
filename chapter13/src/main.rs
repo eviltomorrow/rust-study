@@ -1,6 +1,6 @@
 // use std::{thread, time::Duration};
 
-use std::{thread, time::Duration};
+use std::thread;
 
 fn main() {
     println!("Hello world");
@@ -47,38 +47,44 @@ fn main() {
     let example_closure = |x| x;
     let s = example_closure(String::from("Hello"));
     println!("{}", s);
-    // let i = example_closure(10);
-    //
 
-    let list = vec![1, 2, 3, 4, 5];
+    let list = vec![1, 2, 3, 4];
     println!("Before defining closure: {list:?}");
 
     let only_borrows = || println!("From closure: {list:?}");
+
     println!("Before calling closure: {list:?}");
     only_borrows();
     println!("After  calling closure: {list:?}");
 
-    let mut list = vec![1, 2, 3, 4, 5];
-    println!("Before definning closure: {list:?}");
+    let only_borrows2 = || {
+        for c in &list {
+            println!("borrow: {}", c);
+        }
+    };
+    only_borrows2();
+
+    let just_move = move |list: Vec<i32>| {
+        for c in list {
+            println!("move: {c}");
+        }
+    };
+    just_move(list);
+
+    let mut list = vec![1, 2, 3];
+    println!("Before defining closure: {:?}", list);
 
     let mut borrows_mutably = || list.push(10);
-    // println!("Before definning closure: {list:?}");
     borrows_mutably();
-    println!("After  definning closure: {list:?}");
+    println!("After  calling closure: {:?}", list);
 
-    let list = vec![1, 2, 3];
-    println!("Before defining closure: {list:?}");
+    let list = vec![1, 2, 3, 4, 5];
+    println!("Before defining closure: {:?}", list);
 
-    let r = thread::spawn(move || {
-        println!("From thread: {list:?}");
-        thread::sleep(Duration::from_secs(1));
-    })
-    .join()
-    .unwrap();
-
-    println!("{:?}", r);
-
-    println!("After defining closure: {{}}");
+    let t = thread::spawn(move || println!("From thread: {list:?}"))
+        .join()
+        .unwrap();
+    println!("{:?}", t);
 }
 
 fn add_one_v1(x: u32) -> u32 {
