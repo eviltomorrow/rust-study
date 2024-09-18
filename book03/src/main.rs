@@ -1,46 +1,87 @@
+use std::char;
+
 fn main() {
-    println!("Hello, world!");
+    let v = build_vector();
+    println!("{:?}", v);
 
-    let x = "1";
-    assert_eq!(x.parse::<i32>().unwrap(), 1);
+    let v = build_vector2();
+    println!("{:?}", v);
 
-    let f: Foo = foobar(10);
-    assert_eq!(f, Foo(10));
+    let len = v.len();
+    println!("{:?}", len);
 
-    let b: Bar = foobar(20);
-    assert_eq!(b, Bar(20, 30));
+    let c = b'3';
+    println!("{}", c);
 
-    let c: Foo = foobar2(10);
-    println!("{:?}", c);
-}
+    let x = 100_u8.checked_add(200);
+    assert_eq!(x, None);
 
-fn foobar<T: Inst>(i: i32) -> T {
-    T::new(i)
-}
+    let x: f32 = -0_f32;
+    let y: f32 = 0f32;
+    assert_eq!(x, y);
 
-fn foobar2<T>(i: i32) -> T
-where
-    T: Inst,
-{
-    T::new(i)
-}
+    let x: i32 = 1000000000;
+    let y = x as i16;
+    println!("{}", y);
 
-trait Inst {
-    fn new(i: i32) -> Self;
-}
+    let x = '\x2A';
+    println!("{}", x);
 
-#[derive(Debug, PartialEq)]
-struct Foo(i32);
-impl Inst for Foo {
-    fn new(i: i32) -> Foo {
-        Foo(i)
+    let x = '\u{CA0}';
+    println!("{}", x);
+
+    let x = '\u{D7FF}';
+    println!("{}", x as i32);
+
+    let x: u8 = 55;
+    println!("{}", x as char);
+
+    let x = char::from_u32(42);
+    match x {
+        Some(c) => println!("{}", c),
+        None => println!("None"),
     }
+
+    let text = "Hello world";
+    let (head, tail) = text.split_at(5);
+    println!(r"{}, {}", head, tail);
+
+    let x: [i32; 2] = [1, 2];
+    println!("{:?}", x);
+
+    let mut x = [5, 4, 3, 2, 1];
+    x.sort();
+    println!("{:?}", x);
+
+    let mut x = vec![0u32; 10];
+    x.push(10);
+    println!("{:?}", x);
+
+    let mut v: Vec<i32> = Vec::with_capacity(10);
+    v.push(10);
+    let _ = v;
+
+    let mut v = Vec::<i32>::with_capacity(20);
+    v.push(10);
+    println!("{:?}, {}", v, v.len());
+
+    let v: Vec<i16> = (1..=5).collect();
+    println!("{:?}", v);
+
+    let mut palindrome = vec!["A", "B", "C", "D"];
+    palindrome.reverse();
+    println!("{:?}", palindrome);
 }
 
-#[derive(Debug, PartialEq)]
-struct Bar(i32, i32);
-impl Inst for Bar {
-    fn new(i: i32) -> Bar {
-        Bar(i, i + 10)
-    }
+fn build_vector() -> Vec<i16> {
+    let mut v: Vec<i16> = Vec::<i16>::new();
+    v.push(10i16);
+    v.push(20i16);
+    v
+}
+
+fn build_vector2() -> Vec<i16> {
+    let mut v = Vec::new();
+    v.push(16);
+    v
 }
