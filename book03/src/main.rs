@@ -71,6 +71,36 @@ fn main() {
     let mut palindrome = vec!["A", "B", "C", "D"];
     palindrome.reverse();
     println!("{:?}", palindrome);
+
+    let mut v = [0u8; 3];
+    move_array(v);
+    v.reverse();
+
+    println!(
+        "In the room the women come and go,
+Singing of Mount Abora"
+    );
+
+    println!(
+        "In the room the women comd and go, \
+        Singing of Mount Abora"
+    );
+
+    println!("In the room the women comd and go, \nSinging of Mount Abora");
+
+    println!(
+        r"In the room the women comd and go, \n
+        Singing of Mount Abora"
+    );
+
+    println!(r##"I'm shepard," hello world"##,);
+
+    let method = b"Get";
+    println!("{:?}", method);
+}
+
+fn move_array(attr: [u8; 3]) {
+    println!("{:?}", attr);
 }
 
 fn build_vector() -> Vec<i16> {
