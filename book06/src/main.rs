@@ -8,7 +8,7 @@ fn main() {
 fn wait_for() -> i32 {
     while true {
         if true {
-            // return 10;
+            return 10;
         }
         return 20;
     }

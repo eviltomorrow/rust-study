@@ -1,117 +1,51 @@
-use std::char;
-
 fn main() {
-    let v = build_vector();
+    let v = build_vector_1();
     println!("{:?}", v);
 
-    let v = build_vector2();
+    let v = build_vector_2();
     println!("{:?}", v);
 
-    let len = v.len();
-    println!("{:?}", len);
+    println!("{}", b'x' == 65u8);
 
-    let c = b'3';
-    println!("{}", c);
+    assert_eq!(10_i8 as u16, 10_u16);
+    assert_eq!(2525_u16 as i16, 2525_i16);
+    assert_eq!(-1_i16 as i32, -1_i32);
+    assert_eq!(65535_u16 as i32, 65535_i32);
 
-    let x = 100_u8.checked_add(200);
-    assert_eq!(x, None);
+    assert_eq!(1000_i16 as u8, 232_u8);
+    assert_eq!(65535_u32 as i16, -1_i16);
+    assert_eq!(-1_i8 as u8, 255_u8);
+    assert_eq!(255_u8 as i8, -1_i8);
 
-    let x: f32 = -0_f32;
-    let y: f32 = 0f32;
-    assert_eq!(x, y);
+    assert_eq!(2_u16.pow(4), 16);
+    assert_eq!((-4_i32).abs(), 4);
+    assert_eq!(0b101101_u8.count_ones(), 4);
 
-    let x: i32 = 1000000000;
-    let y = x as i16;
-    println!("{}", y);
+    let c = -10;
+    use_i32(c);
+    assert_eq!(c.abs(), 10);
 
-    let x = '\x2A';
-    println!("{}", x);
-
-    let x = '\u{CA0}';
-    println!("{}", x);
-
-    let x = '\u{D7FF}';
-    println!("{}", x as i32);
-
-    let x: u8 = 55;
-    println!("{}", x as char);
-
-    let x = char::from_u32(42);
-    match x {
-        Some(c) => println!("{}", c),
-        None => println!("None"),
+    let mut i: i8 = 1;
+    loop {
+        i = i.checked_mul(10).expect("overflow i");
+        println!("{}", i);
     }
-
-    let text = "Hello world";
-    let (head, tail) = text.split_at(5);
-    println!(r"{}, {}", head, tail);
-
-    let x: [i32; 2] = [1, 2];
-    println!("{:?}", x);
-
-    let mut x = [5, 4, 3, 2, 1];
-    x.sort();
-    println!("{:?}", x);
-
-    let mut x = vec![0u32; 10];
-    x.push(10);
-    println!("{:?}", x);
-
-    let mut v: Vec<i32> = Vec::with_capacity(10);
-    v.push(10);
-    let _ = v;
-
-    let mut v = Vec::<i32>::with_capacity(20);
-    v.push(10);
-    println!("{:?}, {}", v, v.len());
-
-    let v: Vec<i16> = (1..=5).collect();
-    println!("{:?}", v);
-
-    let mut palindrome = vec!["A", "B", "C", "D"];
-    palindrome.reverse();
-    println!("{:?}", palindrome);
-
-    let mut v = [0u8; 3];
-    move_array(v);
-    v.reverse();
-
-    println!(
-        "In the room the women come and go,
-Singing of Mount Abora"
-    );
-
-    println!(
-        "In the room the women comd and go, \
-        Singing of Mount Abora"
-    );
-
-    println!("In the room the women comd and go, \nSinging of Mount Abora");
-
-    println!(
-        r"In the room the women comd and go, \n
-        Singing of Mount Abora"
-    );
-
-    println!(r##"I'm shepard," hello world"##,);
-
-    let method = b"Get";
-    println!("{:?}", method);
 }
 
-fn move_array(attr: [u8; 3]) {
-    println!("{:?}", attr);
+fn use_i32(c: i32) {
+    println!("{}", c);
 }
 
-fn build_vector() -> Vec<i16> {
+fn build_vector_1() -> Vec<i16> {
     let mut v: Vec<i16> = Vec::<i16>::new();
     v.push(10i16);
-    v.push(20i16);
+    v.push(20_i16);
     v
 }
 
-fn build_vector2() -> Vec<i16> {
+fn build_vector_2() -> Vec<i16> {
     let mut v = Vec::new();
-    v.push(16);
+    v.push(10);
+    v.push(20);
     v
 }
