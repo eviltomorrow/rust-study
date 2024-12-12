@@ -50,9 +50,65 @@ fn main() {
     for v in x {
         println!("{:?}", v);
     }
-    // println!("{:?}", x);
-    //
+
     move_string(String::from("Hello"));
+
+    let x = String::from("Hello");
+    if x == "Hello" {
+        println!("true");
+    }
+    println!("{}", x);
+
+    let x = String::from("Hello");
+    let y = String::from("Hello");
+    println!("{}", x == y);
+
+    let mut v = Vec::new();
+    for i in 101..106 {
+        v.push(i.to_string());
+    }
+    println!("{:?}", v);
+
+    let fifth = v.pop().expect("vector empty");
+    assert_eq!(fifth, "105");
+    println!("{:?}", v);
+
+    let second = v.swap_remove(1);
+    assert_eq!(second, "102");
+    println!("{:?}", v);
+
+    let third = std::mem::replace(&mut v[2], "substitute".to_string());
+    assert_eq!(third, "103");
+    println!("{:?}", v);
+
+    #[derive(Debug)]
+    struct Animal {
+        name: Option<String>,
+    }
+
+    let mut composers = Vec::new();
+    composers.push(Animal {
+        name: Some("Dog".to_string()),
+    });
+    let first_name = std::mem::replace(&mut composers[0].name, None);
+    println!("{:?}, {:?}", first_name, composers);
+    assert_eq!(composers[0].name, None);
+
+    let first_name = composers[0].name.take();
+    println!("{:?}", first_name);
+
+    #[derive(Clone, Copy)]
+    struct Lable {
+        number: u32,
+    }
+
+    fn print(l: Lable) {
+        println!("STAMP: {}", l.number);
+    }
+
+    let l = Lable { number: 3 };
+    print(l);
+    println!("My label number is: {}", l.number);
 }
 
 fn move_vec(x: &Vec<i32>) {
