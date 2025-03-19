@@ -50,6 +50,82 @@ fn main() {
     assert_eq!(b'c', 99);
     assert_eq!('*' as i32, 42);
     assert_eq!(42 as char, '*');
+
+    let text = "I see the eigenvalue in thine eye";
+    let (head, tail) = text.split_at(21);
+    println!("{}, {}", head, tail);
+
+    let temp = text.split_at(21);
+    let head = temp.0;
+    let tail = temp.1;
+    println!("{}, {}", head, tail);
+
+    let c = swap();
+    println!("{:?}", c);
+
+    let mut x = 10;
+    let r = &x;
+    println!("{}, {}", r, *r);
+
+    let r = &mut x;
+    *r = 20;
+    println!("{}", x);
+
+    let t = (12, "eggs");
+    let b = Box::new(t);
+    println!("{:?}", b);
+
+    let lazy_caterer: [u32; 3] = [1, 2, 3];
+    println!("{:?}", lazy_caterer);
+
+    let taxonomy = ["Animalia", "Arthropoda", "Insecta"];
+    println!("{:?}", taxonomy);
+
+    let mut sieve = [true; 10];
+    for i in 2..sieve.len() {
+        if sieve[i] {
+            let mut j = i * i;
+            while j < sieve.len() {
+                sieve[j] = false;
+                j += i;
+            }
+        }
+    }
+    println!("{:?}", sieve);
+
+    let mut chaos = [3, 5, 4, 1, 2, 6];
+    chaos.sort();
+
+    println!("{:?}", chaos);
+
+    let mut primes = vec![2, 3, 5, 7];
+    assert_eq!(primes.iter().product::<i32>(), 210);
+
+    primes.push(11);
+    primes.push(13);
+    assert_eq!(primes.iter().product::<i32>(), 30030);
+
+    let mut c = new_pixel_buffer(4, 5);
+    c.push(3);
+    println!("{}, {}", c.len(), c.capacity());
+
+    let mut pal = Vec::new();
+    pal.push("step");
+    pal.push("on");
+    pal.push("no");
+    pal.push("pets");
+    assert_eq!(pal, vec!["step", "on", "no", "pets"]);
+
+    let v: Vec<u8> = (0..=5).collect();
+    println!("{:?}", v);
+
+    let mut palindrome = vec!["man", "plan", "canal", "panama"];
+    palindrome.reverse();
+    assert_eq!(palindrome, vec!["panama", "canal", "plan", "man"]);
+}
+
+fn new_pixel_buffer(rows: usize, cols: usize) -> Vec<u8> {
+    vec![0; rows * cols]
 }
 
 fn build_vector_1() -> Vec<i16> {
@@ -64,4 +140,8 @@ fn build_vector_2() -> Vec<i16> {
     v.push(10);
     v.push(20);
     v
+}
+
+fn swap() -> (i32,) {
+    (10,)
 }
