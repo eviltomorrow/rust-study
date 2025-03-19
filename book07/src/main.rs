@@ -4,7 +4,7 @@ fn main() {
     let p = pirate_share(100, 10);
     println!("{}", p);
 
-    let p = pirate_share(100, 0);
+    let p = pirate_share(100, 10);
     println!("{}", p);
 }
 
