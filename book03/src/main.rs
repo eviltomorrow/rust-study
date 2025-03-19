@@ -122,6 +122,24 @@ fn main() {
     let mut palindrome = vec!["man", "plan", "canal", "panama"];
     palindrome.reverse();
     assert_eq!(palindrome, vec!["panama", "canal", "plan", "man"]);
+
+    let mut v = Vec::with_capacity(2);
+    assert_eq!(v.len(), 0);
+    assert_eq!(v.capacity(), 2);
+
+    v.push(1);
+    v.push(2);
+    assert_eq!(v.len(), 2);
+    assert_eq!(v.capacity(), 2);
+
+    v.push(3);
+    assert_eq!(v.len(), 3);
+    assert_eq!(v.capacity(), 4);
+
+    let mut v = vec![10, 20, 30, 40, 50];
+    v.insert(3, 35);
+    v.remove(0);
+    print!("{:?}", v);
 }
 
 fn new_pixel_buffer(rows: usize, cols: usize) -> Vec<u8> {
