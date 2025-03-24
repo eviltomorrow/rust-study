@@ -139,7 +139,81 @@ fn main() {
     let mut v = vec![10, 20, 30, 40, 50];
     v.insert(3, 35);
     v.remove(0);
-    print!("{:?}", v);
+    println!("{:?}", v);
+
+    let mut v = vec!["Snow Puff", "Glass Gem"];
+    assert_eq!(v.pop(), Some("Glass Gem"));
+    assert_eq!(v.pop(), Some("Snow Puff"));
+    assert_eq!(v.pop(), None);
+
+    let languages: Vec<String> = std::env::args().collect();
+    for l in languages {
+        println!(
+            "{}: {}",
+            l,
+            if l.len() % 2 == 0 {
+                "functional"
+            } else {
+                "imperative"
+            }
+        )
+    }
+
+    let v: Vec<f64> = vec![0.0, 0.707, 1.0, 0.707];
+    let a: [f64; 4] = [0.0, -0.707, -1.0, -0.707];
+
+    let sv: &[f64] = &v;
+    let sa: &[f64] = &a;
+    println!("{:?}, {:?}", sv, sa);
+
+    print_slice(&v);
+    print_slice(&a);
+
+    println!("{:?}", &v[1..2]);
+    println!("{:?}", &sv[2..]);
+
+    println!("Hello world!");
+    println!(
+        "In the room the women come and go,
+        Singing of Mount Aobra"
+    );
+
+    println!(
+        "It was a bright, cold day in April, and\
+        there were four of us--\
+        more or less."
+    );
+
+    let default_win_install_path = r"C:\Program Files\MyApp";
+    println!("{}", default_win_install_path);
+
+    println!(
+        r###"This raw string started with 'r###'.
+ Therefore it does not end until we reach a quote mark ('"')
+ followed immediately by three pound signs ('###'):
+"###
+    );
+
+    let method = b"GET";
+    assert_eq!(method, &[b'G', b'E', b'T']);
+
+    let noodles = "noodles".to_string();
+    let oodles = &noodles[1..];
+    println!("{}", oodles);
+
+    let noodles = "系统内核".to_string();
+    let oodles = &noodles[3..];
+    println!("{}", oodles);
+
+    let error_message = "too many pets".to_string();
+    println!("{}", error_message);
+    assert_eq!(format!("{}{}{}", 24, 5, 23), "24523".to_string());
+}
+
+fn print_slice(n: &[f64]) {
+    for e in n {
+        println!("{}", e);
+    }
 }
 
 fn new_pixel_buffer(rows: usize, cols: usize) -> Vec<u8> {
