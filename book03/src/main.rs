@@ -111,6 +111,44 @@ fn main() {
     primes.push(11);
     primes.push(13);
     assert_eq!(primes.iter().product::<i32>(), 30030);
+
+    let v: Vec<f64> = vec![0.0, 0.707, 1.0, 0.707];
+    let a: [f64; 4] = [0.0, -0.707, -1.0, -0.707];
+
+    let sv: &[f64] = &v;
+    let sa: &[f64] = &a;
+    println!("{:?}, {:?}", sv, sa);
+
+    print_slice(sv);
+    print_slice(sa);
+
+    print_slice(&sv[0..2]);
+    print_slice(&v[1..3]);
+
+    println!(
+        "In the room the women come and go,
+        Singing of Mount Abora"
+    );
+
+    println!(
+        "It was a bright, cold day in April, and \
+        there were four of us -- \
+        more or less"
+    );
+
+    println!("C:\\Program Files\\Gorillas");
+    println!(r"C:\Program FIles\Gorillas");
+
+    println!(
+        "Line \
+        New line"
+    );
+}
+
+fn print_slice(n: &[f64]) {
+    for elt in n {
+        println!("{}", elt);
+    }
 }
 
 fn build_vector() -> Vec<i16> {
