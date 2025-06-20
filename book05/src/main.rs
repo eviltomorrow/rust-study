@@ -32,6 +32,13 @@ fn main() {
 
     show(&table);
     println!("{:#?}", table);
+
+    let x = 1;
+    {
+        let r = &x;
+        println!("{}", *r);
+    }
+    println!("{}", &x);
 }
 
 fn show(table: &Table) {
