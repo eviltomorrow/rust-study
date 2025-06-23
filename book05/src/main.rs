@@ -114,17 +114,55 @@ fn main() {
         println!("{}", r);
     }
 
-    f(&10);
+    static WORTH_POINTING_AT: i32 = 1000;
+    f(&WORTH_POINTING_AT);
+
     unsafe {
-        println!("{}", &STASH);
+        println!("{}", *STASH);
+    }
+
+    let x = 10;
+    g(&x);
+
+    let s;
+    {
+        let parabola = vec![1, 2, 3, 4, 5];
+        s = smallest(&parabola);
+        println!("{}", s);
+    }
+
+    let s;
+    {
+        let x = 10;
+        s = S { r: &x };
+        println!("{}", s.r);
     }
 }
 
-static mut STASH: &i32 = &128;
-fn f<'a>(p: &'static i32) {
+struct S<'a> {
+    r: &'a i32,
+}
+
+fn smallest<'a>(v: &'a [i32]) -> &'a i32 {
+    let mut s = &v[0];
+    for r in &v[1..] {
+        if *r < *s {
+            s = r;
+        }
+    }
+    s
+}
+
+static mut STASH: &i32 = &10;
+
+fn f(p: &'static i32) {
     unsafe {
         STASH = p;
     }
+}
+
+fn g<'a>(p: &'a i32) {
+    println!("{}", p);
 }
 
 fn factorial(n: usize) -> usize {
