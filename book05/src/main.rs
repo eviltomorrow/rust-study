@@ -137,6 +137,33 @@ fn main() {
         s = S { r: &x };
         println!("{}", s.r);
     }
+
+    let x = 10;
+    let r;
+    {
+        let y = 20;
+        {
+            let t = T { x: &x, y: &y };
+            r = t.x;
+            println!("{}", t.y);
+        }
+    }
+    println!("{}", r);
+
+    let v = vec![1, 2, 3, 4, 5, 6, 7];
+    let r = &v;
+    println!("{:?}", r);
+    let aside = v;
+    println!("{:?}", aside);
+
+    let v = vec![1, 2, 3, 4, 5];
+    let r = &v[0];
+    println!("{}", r);
+}
+
+struct T<'a, 'b> {
+    x: &'a i32,
+    y: &'b i32,
 }
 
 struct S<'a> {
