@@ -19,6 +19,9 @@ fn main() {
     let c = b'\n';
     println!("{}", c);
 
+    let c = b'\x1b';
+    println!("{}", c);
+
     assert_eq!(10_i8 as i16, 10_i16);
     assert_eq!(-1_i16 as i32, -1_i32);
     assert_eq!(65535_u16 as i32, 65535_i32);
@@ -32,6 +35,8 @@ fn main() {
     assert_eq!(0b00101_u8.count_ones(), 2);
     assert_eq!(i32::abs(-4), 4);
 
+    println!("{}", std::i32::MAX);
+
     // check calculate
     let mut i: i32 = 1;
     loop {
@@ -39,6 +44,11 @@ fn main() {
         if i > 100 {
             break;
         }
+    }
+
+    let i: i32 = 10;
+    if let Some(c) = i.checked_mul(10) {
+        println!("{}", c);
     }
     assert_eq!(10_u8.checked_add(30), Some(40));
 
@@ -143,6 +153,11 @@ fn main() {
         "Line \
         New line"
     );
+
+    println!(
+        r###"C:\Program""" \
+        Files"###
+    )
 }
 
 fn print_slice(n: &[f64]) {
