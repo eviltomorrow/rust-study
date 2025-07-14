@@ -40,6 +40,14 @@ fn main() {
     s = "Siddhartha".to_string();
     println!("{}", s);
 
+    // let x = vec![10, 20, 30];
+    // let flag = false;
+    // if flag {
+    //     let d = x;
+    //     println!("{:?}", d);
+    // }
+    // println!("{:?}", x);
+
     let mut v = Vec::new();
     for i in 101..106 {
         v.push(i.to_string());
