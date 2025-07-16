@@ -68,13 +68,21 @@ fn main() {
         println!("{}", s);
     }
 
+    let s1 = Person2 {
+        name: Some("hello".to_string()),
+        birth: 20,
+    };
     let s2 = Person2 {
         name: Some("sheard".to_string()),
         birth: 10,
     };
-    let mut v = vec![s2];
+
+    let mut v = vec![s1, s2];
     let first_name = std::mem::replace(&mut v[0].name, None);
     println!("{:?}, {}, {:?}", first_name, v[0].birth, v);
+
+    let second_name = v[1].name.take();
+    println!("{:?}, {}, {:?}", second_name, v[1].birth, v);
 
     let string1 = "somnambulance".to_string();
     let string2 = string1;
