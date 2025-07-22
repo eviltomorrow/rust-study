@@ -33,6 +33,14 @@ fn main() {
     show(&table);
     println!("{:#?}", table);
 
+    let x = &&10;
+    println!("{}", x);
+
+    let x = 10;
+    let x_ref1 = &x;
+    let x_ref2 = &x;
+    println!("{},{}", x_ref1, x_ref2);
+
     let x = 10;
     let r = &x;
     assert!(*r == 10);
@@ -124,6 +132,12 @@ fn main() {
     let x = 10;
     g(&x);
 
+    let c = 10;
+    s1(&c);
+    static CCC: i32 = 10;
+    s2(&CCC);
+    s1(&CCC);
+
     let s;
     {
         let parabola = vec![1, 2, 3, 4, 5];
@@ -159,6 +173,9 @@ fn main() {
     let v = vec![1, 2, 3, 4, 5];
     let r = &v[0];
     println!("{}", r);
+
+    life_1();
+    life_2();
 }
 
 struct T<'a, 'b> {
@@ -178,6 +195,14 @@ fn smallest<'a>(v: &'a [i32]) -> &'a i32 {
         }
     }
     s
+}
+
+fn s1<'a>(p: &'a i32) {
+    println!("{}", p);
+}
+
+fn s2(p: &'static i32) {
+    println!("{}", p)
 }
 
 static mut STASH: &i32 = &10;
@@ -203,4 +228,24 @@ fn show(table: &Table) {
             println!("  {}", work);
         }
     }
+}
+
+fn life_1() {
+    let x: i32;
+    let r;
+    {
+        x = 0;
+        r = &x;
+    }
+    println!("{}", r);
+}
+
+fn life_2() {
+    let r;
+    let x: i32;
+    {
+        x = 10;
+        r = &x;
+    }
+    println!("{}", r);
 }
