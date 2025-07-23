@@ -176,6 +176,13 @@ fn main() {
 
     life_1();
     life_2();
+
+    life_0(&WORTH_POINTING_AT);
+
+    let s = S {
+        r: &WORTH_POINTING_AT,
+    };
+    println!("{:?}", s);
 }
 
 struct T<'a, 'b> {
@@ -183,6 +190,7 @@ struct T<'a, 'b> {
     y: &'b i32,
 }
 
+#[derive(Debug)]
 struct S<'a> {
     r: &'a i32,
 }
@@ -228,6 +236,10 @@ fn show(table: &Table) {
             println!("  {}", work);
         }
     }
+}
+
+fn life_0(x: &'static i32) {
+    println!("{}", x);
 }
 
 fn life_1() {
