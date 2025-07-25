@@ -178,7 +178,7 @@ fn main() {
     life_2();
 
     life_0(&WORTH_POINTING_AT);
-
+    life_3(&WORTH_POINTING_AT);
     let s = S {
         r: &WORTH_POINTING_AT,
     };
@@ -260,4 +260,8 @@ fn life_2() {
         r = &x;
     }
     println!("{}", r);
+}
+
+fn life_3<'a>(x: &'a i32) {
+    println!("{}", x);
 }
