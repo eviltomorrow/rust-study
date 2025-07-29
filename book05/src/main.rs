@@ -192,6 +192,18 @@ fn main() {
     extend(&mut wave, &tail);
 
     println!("{:?}", wave);
+
+    let w = (123, 456);
+    let r = &w;
+    let r0 = &r.0;
+    w.1;
+    println!("{}", r0);
+
+    let mut w = (123, 456);
+    let m = &mut w;
+    let m0 = &mut m.0;
+    let r0 = &m0;
+    let _ = **r0;
 }
 
 fn extend(vec: &mut Vec<f64>, slice: &[f64]) {
