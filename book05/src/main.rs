@@ -183,6 +183,21 @@ fn main() {
         r: &WORTH_POINTING_AT,
     };
     println!("{:?}", s);
+
+    let mut wave = Vec::new();
+    let head = vec![0.0, 1.0];
+    let tail = vec![0.0, -1.0];
+
+    extend(&mut wave, &head);
+    extend(&mut wave, &tail);
+
+    println!("{:?}", wave);
+}
+
+fn extend(vec: &mut Vec<f64>, slice: &[f64]) {
+    for elt in slice {
+        vec.push(*elt);
+    }
 }
 
 struct T<'a, 'b> {
