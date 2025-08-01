@@ -12,6 +12,19 @@ fn main() {
     };
     println!("{}", msg);
 
+    {
+        fn get_name() -> String {
+            "H".to_string()
+        }
+
+        fn get_age() -> i32 {
+            10
+        }
+
+        get_name();
+        get_age();
+    }
+
     match get_code() {
         0 => println!("OK"),
         1 => {
@@ -20,6 +33,39 @@ fn main() {
         2 => println!("Not OK: 2"),
         _ => println!("Not OK: default"),
     }
+
+    let c = 10;
+    let c = if let 20 = c { c + 30 } else { 0 };
+    println!("{}", c);
+
+    let c = 10;
+    match c {
+        10 => {
+            println!("{}", 10)
+        }
+        _ => {
+            println!("not {}", 10)
+        }
+    }
+
+    match 10 {
+        _ => println!("{}", 10),
+    }
+
+    let mut data = Vec::new();
+    data.push("A".to_string());
+    data.push("B".to_string());
+    data.push("C".to_string());
+
+    if data.len() == 3 {
+        println!("{}", data.len());
+    }
+    println!("{:?}", data);
+
+    for d in &data {
+        println!("{:p}", d);
+    }
+    println!("{:?}", data);
 
     let mut params = HashMap::new();
     params.insert("name", Some("Hello".to_string()));
@@ -31,6 +77,7 @@ fn main() {
         }
         None => {
             println!("Greetings, stranger.");
+
             "D".to_string()
         }
     };
@@ -97,6 +144,8 @@ fn main() {
     let mut slice = vec![9, 8, 7, 6, 5, 4, 3, 2, 1];
     quicksort(&mut slice);
     println!("{:?}", slice);
+
+    never_back();
 }
 
 fn quicksort<T: Ord>(slice: &mut [T]) {
@@ -131,6 +180,6 @@ fn next_number() -> i32 {
     rng.random_range(0..30)
 }
 
-// fn never_back() -> ! {
-//     loop {}
-// }
+fn never_back() {
+    loop {}
+}
