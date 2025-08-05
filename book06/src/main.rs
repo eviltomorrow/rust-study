@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, vec};
 
 use rand::Rng;
 
@@ -146,6 +146,24 @@ fn main() {
     println!("{:?}", slice);
 
     never_back();
+
+    let padovan = vec![1, 2, 3, 4, 5];
+    let mut new_arry: Vec<i32> = Vec::new();
+    for e in &padovan {
+        new_arry.push(*e);
+    }
+    println!("{:?}", padovan);
+
+    let is_even = |x| x % 2 == 0;
+    println!("{}", is_even(16));
+
+    let is_even = |x: i32| -> bool { x % 2 == 0 };
+    println!("{}", is_even(16));
+
+    let mut x = 10;
+    let ref_x = &mut x;
+    let ref_xx = &ref_x;
+    println!("{}", ref_xx);
 }
 
 fn quicksort<T: Ord>(slice: &mut [T]) {
@@ -183,7 +201,7 @@ fn next_number() -> i32 {
 fn never_back() -> i32 {
     let mut c = 10;
     loop {
-        if c >= 100 {
+        if c <= 0 {
             return 10;
         }
         c = c - 1;
