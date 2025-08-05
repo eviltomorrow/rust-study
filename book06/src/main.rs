@@ -180,6 +180,12 @@ fn next_number() -> i32 {
     rng.random_range(0..30)
 }
 
-fn never_back() {
-    loop {}
+fn never_back() -> i32 {
+    let mut c = 10;
+    loop {
+        if c >= 100 {
+            return 10;
+        }
+        c = c - 1;
+    }
 }
