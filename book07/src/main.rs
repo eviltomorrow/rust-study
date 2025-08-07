@@ -1,6 +1,6 @@
 use std::{
     fs,
-    io::{self, BufRead},
+    io::{self},
     path::Path,
     thread,
     time::Duration,
@@ -38,19 +38,35 @@ fn main() {
             println!("wrong: {:?}", err);
         }
     }
+
+    let read_numbers_result = read_numbers2(10);
+    match read_numbers_result {
+        Ok(data) => println!("{:?}", data),
+        Err(err) => {
+            println!("{}", err);
+        }
+    }
 }
 
 type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
 type GenericResult<T> = Result<T, GenericError>;
 
-fn read_numbers(file: &mut dyn BufRead) -> GenericResult<Vec<i64>> {
-    let mut numbers = vec![];
-    for line_result in file.lines() {
-        let line = line_result?;
-        numbers.push(line.parse()?);
+fn read_numbers2(i: i32) -> GenericResult<Vec<i16>> {
+    if i < 0 {
+        let io_error = io::Error::new(io::ErrorKind::Other, "time out");
+        Err(GenericError::from(io_error))
+    } else {
+        Ok(vec![1, 2])
     }
-    Ok(numbers)
 }
+// fn read_numbers(file: &mut dyn BufRead) -> GenericResult<Vec<i64>> {
+//     let mut numbers = vec![];
+//     for line_result in file.lines() {
+//         let line = line_result?;
+//         numbers.push(line.parse()?);
+//     }
+//     Ok(numbers)
+// }
 
 fn display_weather(location: LatLng, report: &WeatherReport) {
     println!("{:?}->{:?}", location, report)
