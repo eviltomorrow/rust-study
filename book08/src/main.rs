@@ -74,12 +74,25 @@ mod spores {
 }
 
 pub mod plant_structures {
+    #[derive(Debug)]
+    pub struct Fern {
+        pub roots: roots::RootSet,
+    }
+
+    pub const ROOT_TEMPERATURE: f64 = 20.0;
+
     pub mod roots {
+        use super::Fern;
+        #[derive(Debug)]
+        pub struct RootSet {}
         pub mod products {
             #[derive(Debug)]
             pub(in crate::plant_structures) struct Cytokinin {}
         }
-        pub fn hello() {}
+        pub fn hello() {
+            let s = Fern { roots: RootSet {} };
+            println!("{:?}", s);
+        }
     }
 
     use roots::products::Cytokinin;
