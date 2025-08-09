@@ -10,16 +10,20 @@ impl Fern {
 }
 
 pub fn run_simulation(fern: &mut Fern, days: usize) {
+    debug_assert_eq!(1, 2);
     for _ in 0..days {
         fern.grow();
     }
 }
 
-// fn main() {
-//     let mut fern = Fern {
-//         size: 1.0,
-//         growth_rate: 0.001,
-//     };
-//     run_simulation(&mut fern, 1000);
-//     println!("final fern size: {}", fern.size);
-// }
+#[test]
+fn test_1() {
+    println!("{}", 1 + 2);
+    debug_assert_eq!(1, 2);
+}
+
+#[test]
+fn test_2() {
+    println!("{}", 1 + 2);
+    // debug_assert_eq!(1, 2);
+}

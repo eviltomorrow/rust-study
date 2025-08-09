@@ -13,3 +13,8 @@ pub fn test_case1() {
     assert!(x.is_positive());
     assert_eq!(x + 1, 2);
 }
+
+#[test]
+fn test_d() {
+    println!("this is test case1");
+}
