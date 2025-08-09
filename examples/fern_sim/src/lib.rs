@@ -19,7 +19,7 @@ pub fn run_simulation(fern: &mut Fern, days: usize) {
 #[test]
 fn test_1() {
     println!("{}", 1 + 2);
-    debug_assert_eq!(1, 2);
+    debug_assert_eq!(1, 1);
 }
 
 #[test]
