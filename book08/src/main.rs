@@ -1,10 +1,28 @@
+use std::ops::Range;
+
 use crate::spores::Sporangium;
 
 mod plant_structures2;
 mod proteins;
 mod spores2;
 
-fn main() {
+#[doc(alias = "plus")]
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+/// 如果两个范围重叠，返回
+///
+/// ```
+/// assert_eq!(book08::overlap(0..7,3..10), true);
+/// ```
+
+///
+pub fn overlap(r1: Range<usize>, r2: Range<usize>) -> bool {
+    r1.start < r1.end && r2.start < r2.end && r1.start < r2.end && r2.start < r1.end
+}
+
+pub fn main() {
     println!("Hello, world!");
 
     let mut x = 1;

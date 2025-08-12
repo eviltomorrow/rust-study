@@ -1,7 +1,7 @@
-#![feature(trace_macros)]
+// #![feature(trace_macros)]
 
 fn main() {
-    trace_macros!(true);
+    // trace_macros!(true);
     // assert_eq!(10 * 10 * 10 + 9 * 9 * 9, 12 * 12 * 12 + 1 * 1 * 1);
-    trace_macros!(false);
+    // trace_macros!(false);
 }

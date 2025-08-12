@@ -1,6 +1,7 @@
 use ::fern_sim;
 use fern_sim::{Fern, run_simulation};
 
+/// 这是 efern main 方法
 fn main() {
     let mut fern = Fern {
         size: 1.0,
