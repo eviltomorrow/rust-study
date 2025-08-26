@@ -1,6 +1,7 @@
 use std::{
+    error::Error,
     fs,
-    io::{self},
+    io::{self, Write, stderr},
     path::Path,
     thread,
     time::Duration,
@@ -10,12 +11,7 @@ fn main() {
     println!("Hello, world!");
 
     thread::spawn(|| {
-        let mut x = 10;
-        loop {
-            let d = 100 / x;
-            println!("{}", d);
-            x -= 1;
-        }
+        pirate_share(10, 0);
     });
 
     thread::sleep(Duration::from_secs(1));
@@ -36,6 +32,7 @@ fn main() {
         Ok(_) => println!("OK"),
         Err(err) => {
             println!("wrong: {:?}", err);
+            print_error(&err);
         }
     }
 
@@ -44,6 +41,7 @@ fn main() {
         Ok(data) => println!("{:?}", data),
         Err(err) => {
             println!("{}", err);
+            print_error(err.as_ref());
         }
     }
 }
@@ -103,4 +101,17 @@ enum WeatherReport {
 #[derive(Debug)]
 enum LatLng {
     LosAngles,
+}
+
+fn pirate_share(total: u64, crew_size: usize) -> u64 {
+    let half = total / 2;
+    half / crew_size as u64
+}
+
+fn print_error(mut err: &dyn Error) {
+    let _ = writeln!(stderr(), "error: {}", err);
+    while let Some(source) = err.source() {
+        let _ = writeln!(stderr(), "caused by: {}", source);
+        err = source;
+    }
 }

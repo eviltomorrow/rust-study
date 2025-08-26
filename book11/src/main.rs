@@ -6,6 +6,7 @@ fn main() -> Result<(), GenericError> {
     println!("Hello, world!");
 
     use std::fs::File;
+
     let mut local_file = File::create("hello.txt")?;
     say_hello(&mut local_file)?;
 
