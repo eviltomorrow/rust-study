@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
+type GenericError = Box<dyn std::error::Error>;
 
 fn main() -> Result<(), GenericError> {
     println!("Hello, world!");
@@ -28,7 +28,7 @@ fn main() -> Result<(), GenericError> {
     Ok(())
 }
 
-fn say_hello(out: &mut dyn io::Write) -> io::Result<()> {
+fn say_hello(out: &mut dyn Write) -> io::Result<()> {
     out.write(b"hello world\n")?;
     Ok(())
 }
