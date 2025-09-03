@@ -1,5 +1,10 @@
+use std::i32;
+
 fn main() {
     println!("Hello world");
+
+    let s = "a";
+    println!("{}", s);
 
     let v = build_vector();
     println!("{:?}", v);
@@ -157,7 +162,11 @@ fn main() {
     println!(
         r###"C:\Program""" \
         Files"###
-    )
+    );
+
+    let s1 = "H".to_string();
+    let s2 = "I".to_string();
+    println!("{}", s1 < s2);
 }
 
 fn print_slice(n: &[f64]) {

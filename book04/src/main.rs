@@ -118,7 +118,7 @@ fn main() {
     let u: Rc<String> = t.clone();
     assert!(s.contains("hira"));
     assert_eq!(t.find("taki"), Some(5));
-    println!("{} are quite chewy, almost bouncy, but lack flavor", u)
+    println!("{} are quite chewy, almost bouncy, but lack flavor", u);
 }
 
 #[derive(Debug)]
