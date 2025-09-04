@@ -45,6 +45,9 @@ fn main() {
     let r = &x;
     assert!(*r == 10);
 
+    let x = &10;
+    println!("{}", x);
+
     let mut y = 20;
     let m = &mut y;
     *m += 20;
@@ -204,6 +207,17 @@ fn main() {
     let m0 = &mut m.0;
     let r0 = &m0;
     let _ = **r0;
+
+    let r;
+    {
+        let x = 10;
+        r = &x;
+        println!("{}", r);
+    }
+
+    let v = vec!["".to_string()];
+    let c = &v[0];
+    println!("{}", c);
 }
 
 fn extend(vec: &mut Vec<f64>, slice: &[f64]) {
