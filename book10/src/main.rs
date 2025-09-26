@@ -1,73 +1,43 @@
-use std::{cmp::Ordering, fmt::Debug};
-
 fn main() {
-    println!("Hello, world!");
+    let m = 10;
+    let n = 20;
 
-    let result = compare(10, 20);
+    let result = compare(n, m);
     println!("{:?}", result);
 
-    use self::Pet::*;
-    println!("{:?}", Orca);
-    println!("{:?}", Giraffe);
+    assert_eq!(size_of::<Ordering>(), 1);
+    assert_eq!(Ordering::Equal as i8, 1);
 
-    use std::mem::size_of;
-    assert_eq!(size_of::<HttpStatus>(), 2);
-    println!("{:?}", HttpStatus::NotFound);
-
-    assert_eq!(HttpStatus::NotFound as i32, 404);
-
-    http_status_from(200).unwrap();
-
-    let s = TimeUnit::Seconds.pluar();
-    println!("{}", s);
-
-    let time_unit = time_unit_from("seconds");
-    println!("{:?}", time_unit);
-
-    let s = RoughTime::InTheFuture(TimeUnit::Days, 3);
-    println!("{}", s.get_str());
-
-    let s = RoughTime::JustNow;
-    println!("{}", s.get_str());
-
-    let s = RoughTime::InThePast(TimeUnit::Hours, 24);
-    println!("{}", s.get_str());
-
-    let next_1 = BinaryTree::NonEmpty(Box::new(TreeNode {
-        element: "next_1",
-        left: BinaryTree::Empty,
-        right: BinaryTree::Empty,
-    }));
-
-    let next_2 = BinaryTree::NonEmpty(Box::new(TreeNode {
-        element: "next_1",
-        left: BinaryTree::Empty,
-        right: BinaryTree::Empty,
-    }));
-
-    let tree = BinaryTree::NonEmpty(Box::new(TreeNode {
-        element: "tree",
-        left: next_1,
-        right: next_2,
-    }));
-
-    println!("{:?}", tree.get_str());
-}
-
-fn compare(m: i32, n: i32) -> Ordering {
-    if m > n {
-        return Ordering::Greater;
-    } else if m == n {
-        return Ordering::Equal;
+    let n = 20;
+    let http_status_result = http_status_from_u32(n);
+    let http_status = if let Some(data) = http_status_result {
+        data
     } else {
-        return Ordering::Less;
-    }
+        HttpStatus::Ok
+    };
+    println!("{:?}", http_status);
+
+    let t = new_timeunit("Hours");
+    let r1 = t.plural();
+    let r2 = t.singular();
+    println!("{}, {}", r1, r2);
 }
 
 #[derive(Debug)]
-enum Pet {
-    Orca,
-    Giraffe,
+enum Ordering {
+    Less,
+    Equal,
+    Greater,
+}
+
+fn compare(n: i32, m: i32) -> Ordering {
+    if n < m {
+        return Ordering::Less;
+    }
+    if n > m {
+        return Ordering::Greater;
+    }
+    Ordering::Equal
 }
 
 #[derive(Debug)]
@@ -77,7 +47,7 @@ enum HttpStatus {
     NotFound = 404,
 }
 
-fn http_status_from(n: u32) -> Option<HttpStatus> {
+fn http_status_from_u32(n: u32) -> Option<HttpStatus> {
     match n {
         200 => Some(HttpStatus::Ok),
         304 => Some(HttpStatus::NotModified),
@@ -86,19 +56,7 @@ fn http_status_from(n: u32) -> Option<HttpStatus> {
     }
 }
 
-fn time_unit_from(s: &str) -> TimeUnit {
-    match s {
-        "seconds" => TimeUnit::Seconds,
-        "minutes" => TimeUnit::Minutes,
-        "hours" => TimeUnit::Hours,
-        "days" => TimeUnit::Days,
-        "months" => TimeUnit::Months,
-        "years" => TimeUnit::Years,
-        _ => TimeUnit::Seconds,
-    }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum TimeUnit {
     Seconds,
     Minutes,
@@ -109,7 +67,7 @@ enum TimeUnit {
 }
 
 impl TimeUnit {
-    fn pluar(self) -> &'static str {
+    fn plural(self) -> &'static str {
         match self {
             TimeUnit::Seconds => "seconds",
             TimeUnit::Minutes => "minutes",
@@ -119,56 +77,26 @@ impl TimeUnit {
             TimeUnit::Years => "years",
         }
     }
+
+    fn singular(self) -> &'static str {
+        self.plural().trim_end_matches("s")
+    }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+fn new_timeunit(c: &'static str) -> TimeUnit {
+    match c {
+        "Seconds" => TimeUnit::Seconds,
+        "Minutes" => TimeUnit::Minutes,
+        "Hours" => TimeUnit::Hours,
+        "Days" => TimeUnit::Days,
+        "Months" => TimeUnit::Months,
+        "Years" => TimeUnit::Years,
+        _ => TimeUnit::Days,
+    }
+}
+
 enum RoughTime {
     InThePast(TimeUnit, u32),
     JustNow,
     InTheFuture(TimeUnit, u32),
-}
-
-impl RoughTime {
-    fn get_str(self) -> String {
-        match self {
-            Self::InTheFuture(unit, n) => format!("{} {} Later!", n, unit.pluar()),
-            Self::JustNow => String::from("Just Now!"),
-            Self::InThePast(unit, n) => format!("{}, {} Ago!", n, unit.pluar()),
-        }
-    }
-}
-
-#[derive(Debug)]
-enum BinaryTree<T> {
-    Empty,
-    NonEmpty(Box<TreeNode<T>>),
-}
-
-impl<T: Debug> BinaryTree<T> {
-    fn get_str(&self) -> String {
-        match self {
-            BinaryTree::Empty => format!("empty"),
-            BinaryTree::NonEmpty(data) => {
-                let s = format!("{:?}", data.element);
-
-                match data.left {
-                    BinaryTree::Empty => {}
-                    _ => {}
-                }
-
-                match data.right {
-                    BinaryTree::Empty => {}
-                    _ => {}
-                }
-                s
-            }
-        }
-    }
-}
-
-#[derive(Debug)]
-struct TreeNode<T> {
-    element: T,
-    left: BinaryTree<T>,
-    right: BinaryTree<T>,
 }

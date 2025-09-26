@@ -5,6 +5,14 @@ use rand::Rng;
 fn main() {
     println!("Hello, world!");
 
+    let ok = true;
+
+    let r = if ok { 10 } else { 20 };
+    println!("{}", r);
+
+    let 你好 = "不好";
+    println!("{}", 你好);
+
     let msg = if get_true() {
         "s".to_string()
     } else {
@@ -164,6 +172,17 @@ fn main() {
     let ref_x = &mut x;
     let ref_xx = &ref_x;
     println!("{}", ref_xx);
+
+    let mut v = vec!["H".to_string(), "H".to_string()];
+    let mut i = 0;
+    for s in &mut v {
+        s.push_str(format!("{}", i).as_str());
+        i += 1;
+    }
+
+    println!("before");
+    never_back2();
+    println!("after");
 }
 
 fn quicksort<T: Ord>(slice: &mut [T]) {
@@ -206,4 +225,8 @@ fn never_back() -> i32 {
         }
         c = c - 1;
     }
+}
+
+fn never_back2() -> () {
+    loop {}
 }
