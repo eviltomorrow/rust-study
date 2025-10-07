@@ -4,11 +4,11 @@ type GenericError = Box<dyn std::error::Error>;
 
 fn main() -> Result<(), GenericError> {
     let mut bytes = vec![];
-    let r = say_hello(&mut bytes)?;
-    // match r {
-    //     Ok(_) => println!("ok"),
-    //     Err(err) => println!("{}", err),
-    // }
+    let r = say_hello(&mut bytes);
+    match r {
+        Ok(_) => println!("ok"),
+        Err(err) => println!("{}", err),
+    }
     Ok(())
 }
 
