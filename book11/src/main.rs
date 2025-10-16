@@ -79,6 +79,15 @@ fn main() -> Result<(), GenericError> {
     let w = Warrier {};
     let c: &dyn Creature = &w;
     c.position();
+
+    "hello".to_string();
+    str::to_string("hello");
+    ToString::to_string("hello");
+    <str as ToString>::to_string("hello");
+
+    c.position();
+    Creature::position(c);
+
     Ok(())
 }
 
@@ -264,5 +273,22 @@ impl Visible for Warrier {
 
     fn hit_test(&self, x: i32, y: i32) -> bool {
         x > y
+    }
+}
+
+#[allow(dead_code)]
+trait Iterator2 {
+    type Item;
+    fn next();
+}
+
+#[allow(dead_code)]
+struct Args {}
+
+impl Iterator2 for Args {
+    type Item = String;
+
+    fn next() {
+        todo!()
     }
 }
