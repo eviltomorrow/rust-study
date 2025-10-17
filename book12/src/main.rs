@@ -1,23 +1,34 @@
-use std::{
-    fs::OpenOptions,
-    io::{self, Write},
-};
+use std::{ops::Add, process::Output};
 
-fn main() -> io::Result<()> {
-    println!("Hello, world!");
+fn main() {
+    let a = Complex { re: 10, im: 10 };
+    let b = Complex { re: 20, im: 20 };
+    let c = a + b;
+    println!("{:?}", c);
+}
 
-    let path = String::from("/tmp/hello.txt");
-    let mut file = OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .open(path)
-        .expect("open file failure");
+#[derive(Debug)]
+struct Complex<T> {
+    re: T,
+    im: T,
+}
 
-    for line in vec!["你好-1", "你好-2", "你好-3"] {
-        writeln!(file, "{}", line)?;
+impl Add for Complex<i32> {
+    type Output = Self;
+    fn add(self, rhs: Self) -> Self {
+        Complex {
+            re: self.re + rhs.re,
+            im: self.im + rhs.im,
+        }
     }
+}
 
-    file.flush()?;
-    Ok(())
+impl<T> Add for Complex<T>
+where :
+    Add<Output=T>
+{
+    type Output = Self;
+    fn add(self, rhs: Self) -> Self::Output {
+
+    }
 }
