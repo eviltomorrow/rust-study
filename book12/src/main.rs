@@ -1,4 +1,4 @@
-use std::{ops::Add, process::Output};
+use std::ops::Add;
 
 fn main() {
     let a = Complex { re: 10, im: 10 };
@@ -13,22 +13,15 @@ struct Complex<T> {
     im: T,
 }
 
-impl Add for Complex<i32> {
+impl<T> Add for Complex<T>
+where
+    T: Add<Output = T>,
+{
     type Output = Self;
-    fn add(self, rhs: Self) -> Self {
+    fn add(self, rhs: Self) -> Self::Output {
         Complex {
             re: self.re + rhs.re,
             im: self.im + rhs.im,
         }
-    }
-}
-
-impl<T> Add for Complex<T>
-where :
-    Add<Output=T>
-{
-    type Output = Self;
-    fn add(self, rhs: Self) -> Self::Output {
-
     }
 }
