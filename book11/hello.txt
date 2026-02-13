@@ -1,4 +1,0 @@
-hello world
-Hihello world
-hello world
-say_hello3
