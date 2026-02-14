@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 fn main() {
     println!("Hello, world!");
 
@@ -50,6 +52,63 @@ fn main() {
     }
     let c = v.remove(0);
     println!("{:?}, {:?}", v, c);
+
+    let mut v = Vec::new();
+    for i in 101..106 {
+        v.push(i.to_string());
+    }
+    let fifth = v.pop().expect("vector empty!");
+    assert_eq!(fifth, "105");
+
+    let second = v.swap_remove(1);
+    assert_eq!(second, "102");
+
+    let third = std::mem::replace(&mut v[2], "substitute".to_string());
+    assert_eq!(third, "103");
+    println!("{:?}", v);
+
+    let v = vec!["A".to_string(), "B".to_string(), "C".to_string()];
+    for mut s in v {
+        s.push('!');
+        println!("{}", s);
+    }
+
+    let mut composers = Vec::new();
+    composers.push(Child {
+        name: Some("A".to_string()),
+        birth: 10,
+    });
+    composers.push(Child {
+        name: Some("B".to_string()),
+        birth: 20,
+    });
+    let first_name = std::mem::replace(&mut composers[0].name, None);
+    println!("{:?}", first_name);
+    println!("{:?}", composers[0].birth);
+
+    let first_name = composers[0].name.take();
+    println!("{:?}", first_name);
+
+    let l = Label { number: 10 };
+    print_label(l);
+    println!("My label number ls: {}", l.number);
+
+    let s = Rc::new("A".to_string());
+    let t = s.clone();
+    println!("{:?}, {:?}", s, t);
+}
+
+#[derive(Copy, Clone)]
+struct Label {
+    number: u32,
+}
+fn print_label(l: Label) {
+    println!("STAMP: {}", l.number);
+}
+
+struct Child {
+    name: Option<String>,
+    birth: i32,
 }
 
 fn print_vector(v: Vec<i32>) {
