@@ -185,6 +185,10 @@ fn main() {
     let noodles = "noodles".to_string();
     let oodles = &noodles[1..];
     println!("{}, {}", noodles, oodles);
+
+    let noodles = "你好".to_string();
+    let oodles = &noodles[3..];
+    println!("{}, {}", noodles, oodles);
 }
 
 fn print(v: &[f64]) {

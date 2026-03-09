@@ -1,6 +1,10 @@
 fn main() {
     println!("Hello, world!");
 
+    let flag = true;
+    let c = { if flag { 10 } else { 20 } };
+    println!("{}", c);
+
     let ok = true;
     let name;
     if ok {
