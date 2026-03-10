@@ -112,6 +112,23 @@ fn main() {
 
     let ramp = (0..10).collect::<Vec<i32>>();
     println!("{:?}", ramp);
+
+    let a: i32 = 10;
+    let b_result = a.checked_div(0);
+
+    match b_result {
+        Some(val) => {
+            println!("{}", val)
+        }
+        None => {
+            println!("None")
+        }
+    }
+
+    let a = 10;
+    let b = 20;
+    let c = a % b;
+    println!("{}", c);
 }
 
 fn get_code() -> i32 {
