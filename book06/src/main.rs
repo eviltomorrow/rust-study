@@ -129,6 +129,24 @@ fn main() {
     let b = 20;
     let c = a % b;
     println!("{}", c);
+
+    let c = '你';
+    let c = c as i32;
+    println!("{:?}", c);
+
+    let s = String::from("Hello world");
+    let s = &s;
+    print_str(s);
+
+    let is_even = |x| x % 2 == 0;
+    println!("{}", is_even(10));
+
+    let is_even = |x: u64| -> bool { x % 2 == 0 };
+    println!("{}", is_even(10));
+}
+
+fn print_str(s: &str) {
+    println!("{}", s);
 }
 
 fn get_code() -> i32 {
