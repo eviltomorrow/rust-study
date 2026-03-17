@@ -1,9 +1,9 @@
 use std::error::Error;
 use std::fs;
-use std::io::{self, Write, stderr};
+use std::io::{self, BufRead, Write, stderr};
 use std::path::Path;
 
-fn main() {
+fn main() -> Result<(), std::io::Error> {
     println!("Hello, world!");
 
     if let Ok(data) = get_result() {
@@ -60,6 +60,10 @@ fn main() {
     let err = get_weather_err(LatLng::L).err().unwrap();
     println!("{:?}", err);
     print_error(&err);
+
+    get_weather_err(LatLng::L)?;
+
+    Ok(())
 }
 
 fn get_result() -> Result<(), io::Error> {
@@ -103,7 +107,23 @@ fn _move_all(src: &Path, dst: &Path) -> io::Result<()> {
     Ok(())
 }
 
+#[allow(dead_code)]
+type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
+
+#[allow(dead_code)]
+type GenericResult<T> = Result<T, GenericError>;
+
 fn _get_option() -> Option<WeatherReport> {
     let value = get_weather(LatLng::L).ok()?;
     Some(value)
+}
+
+#[allow(dead_code)]
+fn read_numbers(file: &mut dyn BufRead) -> GenericResult<Vec<i16>> {
+    let mut numbers = vec![];
+    for line_result in file.lines() {
+        let line = line_result?;
+        numbers.push(line.parse()?);
+    }
+    Ok(numbers)
 }
