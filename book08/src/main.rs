@@ -58,3 +58,17 @@ mod mod_1_exercise {
 mod child;
 pub mod plant_structures;
 mod spores;
+
+#[test]
+fn math_works() {
+    let x: i32 = 1;
+    assert!(x.is_positive());
+    assert_eq!(x + 1, 2);
+}
+
+#[test]
+fn math_works_2() {
+    let x: i32 = 1;
+    assert!(x.is_positive());
+    assert_eq!(x + 1, 2);
+}
