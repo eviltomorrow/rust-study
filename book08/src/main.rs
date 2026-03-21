@@ -22,6 +22,9 @@ fn main() {
     if s1 < s2 {
         mem::swap(&mut s1, &mut s2);
     }
+
+    use self::mod_1_exercise as c;
+    c::echo_hello();
 }
 
 mod mod_1_exercise {
