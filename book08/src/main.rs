@@ -27,6 +27,10 @@ fn main() {
     c::echo_hello();
 }
 
+pub fn echo_hello() {
+    println!("{}", "hello world");
+}
+
 mod mod_1_exercise {
     pub fn echo_hello() {
         println!("hello world");
@@ -71,4 +75,30 @@ fn math_works_2() {
     let x: i32 = 1;
     assert!(x.is_positive());
     assert_eq!(x + 1, 2);
+}
+
+#[test]
+#[allow(unconditional_panic, unused_must_use)]
+#[should_panic(expected = "divide by zero")]
+fn test_divide_by_zero_error() {
+    1 / 0;
+}
+
+#[test]
+#[should_panic(expected = "should panic")]
+fn test_should_panic() {
+    panic!("should panic")
+}
+
+#[cfg(test)]
+mod tests {
+    fn roughly_equal(a: f64, b: f64) -> bool {
+        (a - b).abs() < 1e-6
+    }
+
+    #[test]
+    fn trig_works() {
+        use std::f64::consts::PI;
+        assert!(roughly_equal(PI.sin(), 0.0))
+    }
 }
