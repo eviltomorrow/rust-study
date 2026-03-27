@@ -76,6 +76,23 @@ fn main() {
     let mut q = QueueGeneric::<String>::new();
     q.push(String::from("Hello".to_string()));
     println!("{:?}, {:?}", q.is_empty(), q);
+
+    let mut q = QueueGeneric::new();
+    q.push(10.0f64);
+    q.push(20.0f64);
+    println!("{:?}", q.sum());
+
+    let c = vec![1, 2, 3, 4, 5, 6, 7];
+    let e = find_extrema(&c);
+    println!("{:?}", e);
+
+    let c = find_extrema_1(&c);
+    println!("{:?}", c);
+
+    let coefficients = [1f64; 5];
+    let p = Polynomial::new(coefficients);
+    let sum = p.eval(10.0);
+    println!("{}", sum);
 }
 
 #[derive(Debug)]
@@ -214,4 +231,72 @@ impl<T> QueueGeneric<T> {
     pub fn is_empty(&self) -> bool {
         self.older.is_empty() && self.younger.is_empty()
     }
+}
+
+impl QueueGeneric<f64> {
+    fn sum(&self) -> f64 {
+        let mut sum: f64 = 0.0;
+        for i in &self.older {
+            sum += i;
+        }
+        for i in &self.younger {
+            sum += i;
+        }
+        sum
+    }
+}
+
+#[derive(Debug)]
+#[allow(dead_code)]
+struct Extrema<'elt> {
+    greatest: &'elt i32,
+    least: &'elt i32,
+}
+
+fn find_extrema_1(slice: &'_ [i32]) -> Extrema<'_> {
+    Extrema {
+        greatest: &slice[0],
+        least: &slice[1],
+    }
+}
+
+fn find_extrema<'s>(slice: &'s [i32]) -> Extrema<'s> {
+    let mut greatest = &slice[0];
+    let mut least = &slice[0];
+
+    for i in 1..slice.len() {
+        if slice[i] < *least {
+            least = &slice[0];
+        }
+        if slice[i] > *greatest {
+            greatest = &slice[i];
+        }
+    }
+    Extrema { greatest, least }
+}
+
+#[derive(Debug)]
+struct Polynomial<const N: usize> {
+    coefficients: [f64; N],
+}
+
+impl<const N: usize> Polynomial<N> {
+    fn new(coefficients: [f64; N]) -> Polynomial<N> {
+        Polynomial { coefficients }
+    }
+
+    fn eval(&self, x: f64) -> f64 {
+        let mut sum = 0.0;
+        for i in (0..N).rev() {
+            sum = self.coefficients[i] + x * sum;
+        }
+        sum
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
+#[allow(dead_code)]
+struct Point {
+    x: f64,
+    y: f64,
 }
