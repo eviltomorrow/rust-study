@@ -1,3 +1,5 @@
+use std::cell::{Cell, RefCell};
+
 fn main() {
     println!("Hello, world!");
 
@@ -93,6 +95,31 @@ fn main() {
     let p = Polynomial::new(coefficients);
     let sum = p.eval(10.0);
     println!("{}", sum);
+
+    let s = SpiderBoot1 {
+        hardware_err_count: Cell::new(0),
+    };
+    s.hardware_err_count.set(10);
+
+    let v = s.hardware_err_count.get();
+    println!("{:?}, {}", s, v);
+
+    let s = SpiderBoot2 {
+        hardware_err_count: RefCell::new(10),
+    };
+    let v = s.hardware_err_count.borrow();
+    println!("{:?}", v);
+
+    let ref_cell = RefCell::new("hello".to_string());
+
+    let r = ref_cell.borrow();
+    let count = r.len();
+    println!("{:?}", count);
+    drop(r);
+
+    let mut w = ref_cell.borrow_mut();
+    w.push_str(" world!");
+    println!("{:?}", w);
 }
 
 #[derive(Debug)]
@@ -299,4 +326,14 @@ impl<const N: usize> Polynomial<N> {
 struct Point {
     x: f64,
     y: f64,
+}
+
+#[derive(Debug)]
+struct SpiderBoot1 {
+    hardware_err_count: Cell<u32>,
+}
+
+#[derive(Debug)]
+struct SpiderBoot2 {
+    hardware_err_count: RefCell<u32>,
 }
