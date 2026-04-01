@@ -120,6 +120,13 @@ fn main() {
     let mut w = ref_cell.borrow_mut();
     w.push_str(" world!");
     println!("{:?}", w);
+
+    let mut account = Account {
+        name: String::from("Hello"),
+        age: 10,
+    };
+    account.name.push_str("world");
+    account.age = 20;
 }
 
 #[derive(Debug)]
@@ -336,4 +343,10 @@ struct SpiderBoot1 {
 #[derive(Debug)]
 struct SpiderBoot2 {
     hardware_err_count: RefCell<u32>,
+}
+
+#[derive(Debug)]
+struct Account {
+    name: String,
+    age: i32,
 }
