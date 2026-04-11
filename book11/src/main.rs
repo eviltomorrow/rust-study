@@ -1,4 +1,5 @@
-use std::{fmt::Debug, fs::File, hash::Hash, io::Write};
+use std::io;
+use std::{fmt::Debug, fs::File, hash::Hash, io::Write, ops::Range};
 
 type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
 type GenericResult<T> = Result<T, GenericError>;
@@ -18,6 +19,48 @@ fn main() -> GenericResult<()> {
     let sum = dot_product(a, b);
     println!("{:?}", sum);
 
+    let _s = Salad3 {
+        veggies: vec![&Tomato {}, &Potato {}],
+    };
+
+    let _s = Salad4 {
+        veggies: vec![Box::new(Tomato {}), Box::new(Potato {})],
+    };
+
+    let mut c = Canvas {};
+    let v: &dyn Visible = &Broom {
+        x: 10,
+        y: 10,
+        height: 20,
+    };
+    v.draw(&mut c);
+    v.hit_test(10, 20);
+
+    let v: &dyn Visible = &NonBroom {};
+    v.draw(&mut c);
+
+    let mut s = Sink {};
+    let b = b"hello world";
+    if let Ok(data) = s.write_all(b) {
+        println!("{:?}", data);
+    }
+
+    let c = 'c';
+    println!("{}", c.is_emoji());
+
+    let mut c = Write1 {};
+    let _ = c.write_html(&HtmlDocument {});
+
+    let s = CherryTree { num: &10 };
+    s.splice(&s);
+
+    let m = Mammoth {};
+    m.splice(&m);
+
+    let s1 = SortedStringSet::from_slice(&vec![""]);
+    println!("{}", s1.contains(""));
+
+    unknown_words(&vec![String::from("H")], &s1);
     Ok(())
 }
 
@@ -80,7 +123,25 @@ where
 }
 
 #[allow(dead_code)]
-trait Vegetable {}
+trait Vegetable {
+    fn eat(&self);
+}
+
+struct Tomato {}
+
+impl Vegetable for Tomato {
+    fn eat(&self) {
+        println!("very good!");
+    }
+}
+
+struct Potato {}
+
+impl Vegetable for Potato {
+    fn eat(&self) {
+        println!("not good!");
+    }
+}
 
 #[allow(dead_code)]
 struct Salad<V: Vegetable> {
@@ -100,4 +161,180 @@ struct Salad3<'a> {
 #[allow(dead_code)]
 struct Salad4 {
     veggies: Vec<Box<dyn Vegetable>>,
+}
+
+trait Visible {
+    fn draw(&self, canvas: &mut Canvas);
+    fn hit_test(&self, x: i32, y: i32) -> bool;
+}
+
+struct Canvas {}
+
+impl Canvas {
+    fn write_at(&self, _x: i32, _y: i32, _c: char) {}
+}
+
+impl Visible for Broom {
+    fn draw(&self, canvas: &mut Canvas) {
+        for y in self.broomstick_range() {
+            canvas.write_at(self.x, y, '|');
+        }
+        canvas.write_at(self.x, self.y, 'M');
+    }
+
+    fn hit_test(&self, x: i32, y: i32) -> bool {
+        self.x == x && self.y - self.height - 1 <= y && y <= self.y
+    }
+}
+
+struct Broom {
+    x: i32,
+    y: i32,
+    height: i32,
+}
+
+impl Broom {
+    fn broomstick_range(&self) -> Range<i32> {
+        self.y - self.height - 1..self.y
+    }
+}
+
+struct NonBroom {}
+
+impl Visible for NonBroom {
+    fn draw(&self, canvas: &mut Canvas) {
+        let _ = canvas;
+    }
+
+    fn hit_test(&self, x: i32, y: i32) -> bool {
+        let _ = x;
+        let _ = y;
+        true
+    }
+}
+
+pub struct Sink;
+
+impl Write for Sink {
+    fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+        Ok(buf.len())
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+trait IsEmoji {
+    fn is_emoji(&self) -> bool;
+}
+
+impl IsEmoji for char {
+    fn is_emoji(&self) -> bool {
+        false
+    }
+}
+
+trait WriteHtml {
+    fn write_html(&mut self, html: &HtmlDocument) -> io::Result<()>;
+}
+
+struct HtmlDocument {}
+
+impl<W: Write> WriteHtml for W {
+    fn write_html(&mut self, html: &HtmlDocument) -> io::Result<()> {
+        let _ = html;
+        println!("Here");
+        Ok(())
+    }
+}
+
+struct Write1 {}
+
+impl Write for Write1 {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        Ok(buf.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        Ok(())
+    }
+}
+
+trait Spliceable {
+    fn splice(&self, other: &Self) -> Self;
+}
+
+struct CherryTree<'a> {
+    num: &'a i32,
+}
+
+impl<'a> Spliceable for CherryTree<'a> {
+    fn splice(&self, other: &Self) -> Self {
+        let _ = other;
+        Self { num: other.num }
+    }
+}
+
+struct Mammoth {}
+
+impl Spliceable for Mammoth {
+    fn splice(&self, other: &Self) -> Self {
+        let _ = other;
+        Self {}
+    }
+}
+
+#[allow(dead_code)]
+trait MegaSpliceable {
+    fn splice(&self, other: &dyn MegaSpliceable) -> Box<dyn MegaSpliceable>;
+}
+
+trait StringSet {
+    fn new() -> Self
+    where
+        Self: Sized;
+    fn from_slice(strings: &[&str]) -> Self
+    where
+        Self: Sized;
+    fn contains(&self, string: &str) -> bool;
+    fn add(&mut self, string: &str);
+}
+
+struct SortedStringSet {}
+
+impl StringSet for SortedStringSet {
+    fn new() -> Self {
+        SortedStringSet {}
+    }
+
+    fn from_slice(strings: &[&str]) -> Self {
+        let _ = strings;
+        SortedStringSet {}
+    }
+
+    fn contains(&self, string: &str) -> bool {
+        let _ = string;
+        true
+    }
+
+    fn add(&mut self, string: &str) {
+        let _ = string;
+    }
+}
+
+fn unknown_words<S: StringSet>(document: &[String], wordlist: &S) -> S {
+    let mut unknowns = S::new();
+    for word in document {
+        if wordlist.contains(word) {
+            unknowns.add(word);
+        }
+    }
+    unknowns
+}
+
+fn unknown_words_2(document: &[String], wordlist: &dyn StringSet) {
+    let _ = document;
+    let _ = wordlist;
+    wordlist.
 }
