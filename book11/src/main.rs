@@ -1,4 +1,6 @@
 use std::io;
+use std::iter;
+use std::vec::IntoIter;
 use std::{fmt::Debug, fs::File, hash::Hash, io::Write, ops::Range};
 
 type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
@@ -61,6 +63,7 @@ fn main() -> GenericResult<()> {
     println!("{}", s1.contains(""));
 
     unknown_words(&vec![String::from("H")], &s1);
+    unknown_words_2(&vec![String::from("H")], &s1);
     Ok(())
 }
 
@@ -333,8 +336,74 @@ fn unknown_words<S: StringSet>(document: &[String], wordlist: &S) -> S {
     unknowns
 }
 
-fn unknown_words_2(document: &[String], wordlist: &dyn StringSet) {
+fn unknown_words_2(document: &[String], wordlist: &dyn StringSet) -> Box<dyn StringSet> {
     let _ = document;
     let _ = wordlist;
-    wordlist.
+    Box::new(SortedStringSet {})
+}
+
+pub trait Iterator2 {
+    type Item;
+    type C;
+    fn next(&mut self) -> Option<Self::C>;
+}
+
+impl Iterator2 for std::env::Args {
+    type Item = String;
+    type C = i32;
+    fn next(&mut self) -> Option<i32> {
+        todo!()
+    }
+}
+
+#[allow(dead_code)]
+fn collect_into_vector<I: Iterator>(iter: I) -> Vec<I::Item> {
+    let mut results = Vec::new();
+    for value in iter {
+        results.push(value);
+    }
+    results
+}
+
+#[allow(dead_code)]
+fn dump<I>(iter: I)
+where
+    I: Iterator,
+    I::Item: Debug,
+{
+    for (index, value) in iter.enumerate() {
+        println!("{}, {:?}", index, value);
+    }
+}
+
+#[allow(dead_code)]
+fn dump_2<I>(iter: I)
+where
+    I: Iterator<Item = String>,
+{
+    for (index, value) in iter.enumerate() {
+        println!("{}, {:?}", index, value);
+    }
+}
+
+#[allow(dead_code)]
+fn dump_3(iter: &mut dyn Iterator<Item = String>) {
+    for (index, value) in iter.enumerate() {
+        println!("{}: {:?}", index, value)
+    }
+}
+
+#[allow(dead_code)]
+fn cyclical_zip_1(v: Vec<u8>, u: Vec<u8>) -> iter::Cycle<iter::Chain<IntoIter<u8>, IntoIter<u8>>> {
+    v.into_iter().chain(u.into_iter()).cycle()
+}
+
+#[allow(dead_code)]
+fn cyclical_zip_2(v: Vec<u8>, u: Vec<u8>) -> Box<dyn Iterator<Item = u8>> {
+    Box::new(v.into_iter().chain(u.into_iter()).cycle())
+}
+
+#[allow(dead_code)]
+fn cyclical_zip_3(v: Vec<u8>, u: Vec<u8>) -> impl Iterator<Item = u8> {
+    v.into_iter().chain(u.into_iter()).cycle()
 }
